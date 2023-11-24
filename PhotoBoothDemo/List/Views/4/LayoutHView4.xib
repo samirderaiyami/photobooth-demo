@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LayoutHView4" customModule="PhotoBoothDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="137" height="154"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gwB-w4-eZw">
+                    <rect key="frame" x="5" y="30" width="127" height="94"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="box" translatesAutoresizingMaskIntoConstraints="NO" id="HCf-fX-TUe">
+                            <rect key="frame" x="10" y="10" width="107" height="74"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="HCf-fX-TUe" firstAttribute="top" secondItem="gwB-w4-eZw" secondAttribute="top" constant="10" id="2AP-Yc-qGF"/>
+                        <constraint firstItem="HCf-fX-TUe" firstAttribute="leading" secondItem="gwB-w4-eZw" secondAttribute="leading" constant="10" id="HE3-be-hiO"/>
+                        <constraint firstAttribute="bottom" secondItem="HCf-fX-TUe" secondAttribute="bottom" constant="10" id="Qpq-cR-NN6"/>
+                        <constraint firstAttribute="trailing" secondItem="HCf-fX-TUe" secondAttribute="trailing" constant="10" id="WoZ-n4-syB"/>
+                        <constraint firstItem="HCf-fX-TUe" firstAttribute="centerX" secondItem="gwB-w4-eZw" secondAttribute="centerX" id="ubc-jg-B7P"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="borderColorApp">
+                            <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="gwB-w4-eZw" secondAttribute="trailing" constant="5" id="8UK-T9-6eC"/>
+                <constraint firstItem="gwB-w4-eZw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="BbN-OT-GiN"/>
+                <constraint firstItem="gwB-w4-eZw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="J9M-L0-xAp"/>
+                <constraint firstAttribute="bottom" secondItem="gwB-w4-eZw" secondAttribute="bottom" constant="30" id="uhI-w3-Hqw"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageView" destination="HCf-fX-TUe" id="e3m-YM-kwx"/>
+            </connections>
+            <point key="canvasLocation" x="-34.351145038167935" y="-71.126760563380287"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="box" width="200" height="200"/>
+    </resources>
+</document>

@@ -1,0 +1,16 @@
+PODS:
+  - DevicePpi (1.2.18)
+
+DEPENDENCIES:
+  - DevicePpi
+
+SPEC REPOS:
+  trunk:
+    - DevicePpi
+
+SPEC CHECKSUMS:
+  DevicePpi: 3db658ec52e8ec7c41cd59b8d061c91ea98b6c87
+
+PODFILE CHECKSUM: 09515d30d1a76161fd36260ae131c6453bff2b90
+
+COCOAPODS: 1.11.3

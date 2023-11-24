@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LayoutCollCell" id="gTV-IL-0wX" customClass="LayoutCollCell" customModule="PhotoBoothDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="282" height="269"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="282" height="269"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHA-Z5-iRV">
+                        <rect key="frame" x="0.0" y="0.0" width="107" height="179"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pd7-hf-DIV">
+                                <rect key="frame" x="20" y="10" width="67" height="159"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="box" translatesAutoresizingMaskIntoConstraints="NO" id="gkQ-ML-5gW">
+                                        <rect key="frame" x="10" y="10" width="47" height="99"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="gkQ-ML-5gW" secondAttribute="bottom" constant="50" id="KXA-tc-bUt"/>
+                                    <constraint firstItem="gkQ-ML-5gW" firstAttribute="top" secondItem="pd7-hf-DIV" secondAttribute="top" constant="10" id="Vmd-TF-YAB"/>
+                                    <constraint firstAttribute="trailing" secondItem="gkQ-ML-5gW" secondAttribute="trailing" constant="10" id="elE-mX-JBH"/>
+                                    <constraint firstItem="gkQ-ML-5gW" firstAttribute="leading" secondItem="pd7-hf-DIV" secondAttribute="leading" constant="10" id="gCd-N2-dx5"/>
+                                    <constraint firstItem="gkQ-ML-5gW" firstAttribute="centerX" secondItem="pd7-hf-DIV" secondAttribute="centerX" id="mih-vG-2uk"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColorApp">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="pd7-hf-DIV" secondAttribute="bottom" constant="10" id="b1w-CA-Bre"/>
+                            <constraint firstItem="pd7-hf-DIV" firstAttribute="leading" secondItem="UHA-Z5-iRV" secondAttribute="leading" constant="20" id="kcT-K7-SDL"/>
+                            <constraint firstAttribute="trailing" secondItem="pd7-hf-DIV" secondAttribute="trailing" constant="20" id="xlu-xM-8Av"/>
+                            <constraint firstItem="pd7-hf-DIV" firstAttribute="top" secondItem="UHA-Z5-iRV" secondAttribute="top" constant="10" id="yUq-Sq-QUV"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="_4x6Layout1" translatesAutoresizingMaskIntoConstraints="NO" id="zZv-LK-6mG">
+                        <rect key="frame" x="0.0" y="0.0" width="282" height="269"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="UHA-Z5-iRV" secondAttribute="trailing" id="2Mt-l1-ary"/>
+                <constraint firstItem="UHA-Z5-iRV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="60v-Vg-lp1"/>
+                <constraint firstAttribute="bottom" secondItem="UHA-Z5-iRV" secondAttribute="bottom" id="FN5-s7-qJf"/>
+                <constraint firstItem="UHA-Z5-iRV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="QJn-ul-w11"/>
+                <constraint firstItem="zZv-LK-6mG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="hQ1-CI-fui"/>
+                <constraint firstItem="zZv-LK-6mG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="hry-oe-JAJ"/>
+                <constraint firstAttribute="trailing" secondItem="zZv-LK-6mG" secondAttribute="trailing" id="luU-7g-u8z"/>
+                <constraint firstAttribute="bottom" secondItem="zZv-LK-6mG" secondAttribute="bottom" id="nPj-YZ-Yjn"/>
+            </constraints>
+            <size key="customSize" width="282" height="269"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="UHA-Z5-iRV"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="imgLayout" destination="zZv-LK-6mG" id="MtX-GL-mzT"/>
+            </connections>
+            <point key="canvasLocation" x="192.36641221374046" y="2.4647887323943665"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="_4x6Layout1" width="305" height="453"/>
+        <image name="box" width="200" height="200"/>
+    </resources>
+</document>
