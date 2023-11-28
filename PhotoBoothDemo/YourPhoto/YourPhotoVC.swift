@@ -18,6 +18,9 @@ class YourPhotoVC: UIViewController {
 
     override func viewDidLoad() {
         centerImage.image = finalImage
+        
+        NotificationCenter.default.post(name: Notification.Name("UpdateHome"), object: nil, userInfo: nil)
+
     }
     
     @IBAction func btnCamera(sender: UIButton) {

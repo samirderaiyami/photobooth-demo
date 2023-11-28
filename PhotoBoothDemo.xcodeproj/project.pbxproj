@@ -37,6 +37,22 @@
 		B8D1BB762B04BD36008A8C48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8D1BB752B04BD36008A8C48 /* Assets.xcassets */; };
 		B8D1BB792B04BD36008A8C48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D1BB772B04BD36008A8C48 /* LaunchScreen.storyboard */; };
 		B8D1BB812B04C023008A8C48 /* CustomCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1BB802B04C023008A8C48 /* CustomCameraViewController.swift */; };
+		B8DA43202B15FDDD00EAB040 /* IRSticker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43172B15FDDC00EAB040 /* IRSticker.bundle */; };
+		B8DA43212B15FDDD00EAB040 /* IRStickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA43192B15FDDC00EAB040 /* IRStickerView.swift */; };
+		B8DA43222B15FDDD00EAB040 /* IRStickerGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA431A2B15FDDC00EAB040 /* IRStickerGestureRecognizer.swift */; };
+		B8DA43232B15FDDD00EAB040 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA431C2B15FDDC00EAB040 /* Utilities.swift */; };
+		B8DA43242B15FDDD00EAB040 /* UIImage+Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA431D2B15FDDC00EAB040 /* UIImage+Bundle.swift */; };
+		B8DA433F2B16082600EAB040 /* JLStickerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA43382B16082600EAB040 /* JLStickerImageView.swift */; };
+		B8DA43402B16082600EAB040 /* JLStickerLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA43392B16082600EAB040 /* JLStickerLabelView.swift */; };
+		B8DA43412B16082600EAB040 /* JLAttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA433A2B16082600EAB040 /* JLAttributedTextView.swift */; };
+		B8DA43422B16082600EAB040 /* CalcuteFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA433B2B16082600EAB040 /* CalcuteFunctions.swift */; };
+		B8DA43432B16082600EAB040 /* adjustToFitFontOrWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA433C2B16082600EAB040 /* adjustToFitFontOrWidth.swift */; };
+		B8DA434A2B16096D00EAB040 /* sticker1.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43452B16096D00EAB040 /* sticker1.png */; };
+		B8DA434B2B16096D00EAB040 /* btn_smile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43462B16096D00EAB040 /* btn_smile@2x.png */; };
+		B8DA434C2B16096D00EAB040 /* sticker2.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43472B16096D00EAB040 /* sticker2.png */; };
+		B8DA434D2B16096D00EAB040 /* btn_flip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43482B16096D00EAB040 /* btn_flip@2x.png */; };
+		B8DA434E2B16096D00EAB040 /* sticker3.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43492B16096D00EAB040 /* sticker3.png */; };
+		B8DA43542B160CDA00EAB040 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA43532B160CDA00EAB040 /* Layout.swift */; };
 		B8DCF2242B0DD80700643E05 /* LayoutVView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DCF2232B0DD80700643E05 /* LayoutVView1.swift */; };
 		B8DCF2262B0DD81100643E05 /* LayoutVView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8DCF2252B0DD81100643E05 /* LayoutVView1.xib */; };
 		B8EAD9952B10A76E00943018 /* YourPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAD9942B10A76E00943018 /* YourPhotoVC.swift */; };
@@ -77,6 +93,22 @@
 		B8D1BB782B04BD36008A8C48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B8D1BB7A2B04BD36008A8C48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8D1BB802B04C023008A8C48 /* CustomCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraViewController.swift; sourceTree = "<group>"; };
+		B8DA43172B15FDDC00EAB040 /* IRSticker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IRSticker.bundle; sourceTree = "<group>"; };
+		B8DA43192B15FDDC00EAB040 /* IRStickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IRStickerView.swift; sourceTree = "<group>"; };
+		B8DA431A2B15FDDC00EAB040 /* IRStickerGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IRStickerGestureRecognizer.swift; sourceTree = "<group>"; };
+		B8DA431C2B15FDDC00EAB040 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B8DA431D2B15FDDC00EAB040 /* UIImage+Bundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Bundle.swift"; sourceTree = "<group>"; };
+		B8DA43382B16082600EAB040 /* JLStickerImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLStickerImageView.swift; sourceTree = "<group>"; };
+		B8DA43392B16082600EAB040 /* JLStickerLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLStickerLabelView.swift; sourceTree = "<group>"; };
+		B8DA433A2B16082600EAB040 /* JLAttributedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLAttributedTextView.swift; sourceTree = "<group>"; };
+		B8DA433B2B16082600EAB040 /* CalcuteFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalcuteFunctions.swift; sourceTree = "<group>"; };
+		B8DA433C2B16082600EAB040 /* adjustToFitFontOrWidth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = adjustToFitFontOrWidth.swift; sourceTree = "<group>"; };
+		B8DA43452B16096D00EAB040 /* sticker1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sticker1.png; sourceTree = "<group>"; };
+		B8DA43462B16096D00EAB040 /* btn_smile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_smile@2x.png"; sourceTree = "<group>"; };
+		B8DA43472B16096D00EAB040 /* sticker2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sticker2.png; sourceTree = "<group>"; };
+		B8DA43482B16096D00EAB040 /* btn_flip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_flip@2x.png"; sourceTree = "<group>"; };
+		B8DA43492B16096D00EAB040 /* sticker3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sticker3.png; sourceTree = "<group>"; };
+		B8DA43532B160CDA00EAB040 /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		B8DCF2232B0DD80700643E05 /* LayoutVView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutVView1.swift; sourceTree = "<group>"; };
 		B8DCF2252B0DD81100643E05 /* LayoutVView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LayoutVView1.xib; sourceTree = "<group>"; };
 		B8EAD9942B10A76E00943018 /* YourPhotoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourPhotoVC.swift; sourceTree = "<group>"; };
@@ -168,6 +200,8 @@
 		B84E98D72B0CADDA00A3E809 /* Oher */ = {
 			isa = PBXGroup;
 			children = (
+				B8DA43352B16082600EAB040 /* JLStickerTextView */,
+				B8DA43132B15FDDC00EAB040 /* IRSticker-swift */,
 				B84E98D82B0CADE200A3E809 /* ExtensionsUIView.swift */,
 				B8EAD9962B10B88C00943018 /* CameraOverlayView.swift */,
 			);
@@ -284,6 +318,7 @@
 		B8D1BB6B2B04BD34008A8C48 /* PhotoBoothDemo */ = {
 			isa = PBXGroup;
 			children = (
+				B8DA43522B160CDA00EAB040 /* Model */,
 				B8D1BB6E2B04BD34008A8C48 /* SceneDelegate.swift */,
 				B8D1BB6C2B04BD34008A8C48 /* AppDelegate.swift */,
 				B84E98BF2B0C7EA300A3E809 /* Constants.swift */,
@@ -296,8 +331,77 @@
 				B8D1BB752B04BD36008A8C48 /* Assets.xcassets */,
 				B8D1BB772B04BD36008A8C48 /* LaunchScreen.storyboard */,
 				B8D1BB7A2B04BD36008A8C48 /* Info.plist */,
+				B8DA43482B16096D00EAB040 /* btn_flip@2x.png */,
+				B8DA43462B16096D00EAB040 /* btn_smile@2x.png */,
+				B8DA43452B16096D00EAB040 /* sticker1.png */,
+				B8DA43472B16096D00EAB040 /* sticker2.png */,
+				B8DA43492B16096D00EAB040 /* sticker3.png */,
 			);
 			path = PhotoBoothDemo;
+			sourceTree = "<group>";
+		};
+		B8DA43132B15FDDC00EAB040 /* IRSticker-swift */ = {
+			isa = PBXGroup;
+			children = (
+				B8DA43162B15FDDC00EAB040 /* IRSticker-swift */,
+			);
+			path = "IRSticker-swift";
+			sourceTree = "<group>";
+		};
+		B8DA43162B15FDDC00EAB040 /* IRSticker-swift */ = {
+			isa = PBXGroup;
+			children = (
+				B8DA43172B15FDDC00EAB040 /* IRSticker.bundle */,
+				B8DA43182B15FDDC00EAB040 /* Class */,
+				B8DA431B2B15FDDC00EAB040 /* Utility */,
+			);
+			path = "IRSticker-swift";
+			sourceTree = "<group>";
+		};
+		B8DA43182B15FDDC00EAB040 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				B8DA43192B15FDDC00EAB040 /* IRStickerView.swift */,
+				B8DA431A2B15FDDC00EAB040 /* IRStickerGestureRecognizer.swift */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		B8DA431B2B15FDDC00EAB040 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				B8DA431C2B15FDDC00EAB040 /* Utilities.swift */,
+				B8DA431D2B15FDDC00EAB040 /* UIImage+Bundle.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		B8DA43352B16082600EAB040 /* JLStickerTextView */ = {
+			isa = PBXGroup;
+			children = (
+				B8DA43372B16082600EAB040 /* Source */,
+			);
+			path = JLStickerTextView;
+			sourceTree = "<group>";
+		};
+		B8DA43372B16082600EAB040 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				B8DA43382B16082600EAB040 /* JLStickerImageView.swift */,
+				B8DA43392B16082600EAB040 /* JLStickerLabelView.swift */,
+				B8DA433A2B16082600EAB040 /* JLAttributedTextView.swift */,
+				B8DA433B2B16082600EAB040 /* CalcuteFunctions.swift */,
+				B8DA433C2B16082600EAB040 /* adjustToFitFontOrWidth.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		B8DA43522B160CDA00EAB040 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B8DA43532B160CDA00EAB040 /* Layout.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		B8EAD9932B10A69700943018 /* YourPhoto */ = {
@@ -368,6 +472,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8DA434E2B16096D00EAB040 /* sticker3.png in Resources */,
 				B89B5B352B0DFE4D00CE631D /* LayoutVView7.xib in Resources */,
 				B8DCF2262B0DD81100643E05 /* LayoutVView1.xib in Resources */,
 				B89B5B202B0DE9FF00CE631D /* LayoutVView2.xib in Resources */,
@@ -376,8 +481,13 @@
 				B8B45C942B0F4EB8001B45D1 /* _4x6Layout1.xib in Resources */,
 				B8D1BB762B04BD36008A8C48 /* Assets.xcassets in Resources */,
 				B8D1BB742B04BD34008A8C48 /* Main.storyboard in Resources */,
+				B8DA43202B15FDDD00EAB040 /* IRSticker.bundle in Resources */,
+				B8DA434A2B16096D00EAB040 /* sticker1.png in Resources */,
+				B8DA434B2B16096D00EAB040 /* btn_smile@2x.png in Resources */,
 				B89B5B242B0DEA4D00CE631D /* LayoutVView3.xib in Resources */,
+				B8DA434D2B16096D00EAB040 /* btn_flip@2x.png in Resources */,
 				B89B5B302B0DFE4600CE631D /* LayoutVView6.xib in Resources */,
+				B8DA434C2B16096D00EAB040 /* sticker2.png in Resources */,
 				B8B45C972B0F5078001B45D1 /* _4x6Layout2.xib in Resources */,
 				B89B5B1D2B0DDD7500CE631D /* LayoutHView4.xib in Resources */,
 				B89B5B2B2B0DFE4100CE631D /* LayoutVView5.xib in Resources */,
@@ -445,12 +555,22 @@
 				B8D1BB6D2B04BD34008A8C48 /* AppDelegate.swift in Sources */,
 				B84E98D92B0CADE300A3E809 /* ExtensionsUIView.swift in Sources */,
 				B84E98C02B0C7EA300A3E809 /* Constants.swift in Sources */,
+				B8DA43232B15FDDD00EAB040 /* Utilities.swift in Sources */,
+				B8DA43542B160CDA00EAB040 /* Layout.swift in Sources */,
+				B8DA43402B16082600EAB040 /* JLStickerLabelView.swift in Sources */,
+				B8DA43222B15FDDD00EAB040 /* IRStickerGestureRecognizer.swift in Sources */,
 				B84E98C92B0C956F00A3E809 /* LayoutCollCell.swift in Sources */,
 				B8EAD9972B10B88C00943018 /* CameraOverlayView.swift in Sources */,
 				B89B5B212B0DE9FF00CE631D /* LayoutVView2.swift in Sources */,
 				B8B45C932B0F4EB8001B45D1 /* _4x6Layout1.swift in Sources */,
+				B8DA43422B16082600EAB040 /* CalcuteFunctions.swift in Sources */,
 				B8D1BB6F2B04BD34008A8C48 /* SceneDelegate.swift in Sources */,
+				B8DA43212B15FDDD00EAB040 /* IRStickerView.swift in Sources */,
 				B89B5B252B0DEA4D00CE631D /* LayoutVView3.swift in Sources */,
+				B8DA43432B16082600EAB040 /* adjustToFitFontOrWidth.swift in Sources */,
+				B8DA43242B15FDDD00EAB040 /* UIImage+Bundle.swift in Sources */,
+				B8DA43412B16082600EAB040 /* JLAttributedTextView.swift in Sources */,
+				B8DA433F2B16082600EAB040 /* JLStickerImageView.swift in Sources */,
 				B89B5B2F2B0DFE4600CE631D /* LayoutVView6.swift in Sources */,
 				B89B5B342B0DFE4D00CE631D /* LayoutVView7.swift in Sources */,
 			);

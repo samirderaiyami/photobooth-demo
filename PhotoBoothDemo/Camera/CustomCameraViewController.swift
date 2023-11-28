@@ -49,7 +49,6 @@ class CustomCameraViewController: UIViewController {
         super.viewDidLoad()
         noOfLayouts.text = "1 / \(layout?.noOfViews ?? 1)"
         addViews()
-        setupCameraWithOverlay(holeHeight: <#CGFloat#>, holeWidth: <#CGFloat#>)
         self.setupCaptureSession()
         setupCameraWithOverlay(holeHeight: arrPhotoboothImageViews[0].frame.height, holeWidth: arrPhotoboothImageViews[0].frame.width)
         heightOfHeader.constant = 100
@@ -348,6 +347,7 @@ extension CustomCameraViewController: AVCapturePhotoCaptureDelegate {
                 
                 arrPhotoboothImages.append(croppedImage)
                 
+                
                 self.collectionView.reloadData()
                 
                 for (index,item) in arrPhotoboothImages.enumerated() {
@@ -367,6 +367,16 @@ extension CustomCameraViewController: AVCapturePhotoCaptureDelegate {
                 
                 if arrPhotoboothImages.count == layout?.noOfViews ?? 0 {
                     print("Finished!")
+                    
+                    layout?.images = []
+                    for image in arrPhotoboothImages {
+                        if let data = image.jpegData(compressionQuality: 0.5) {
+                            layout?.images.append(data)
+                        }
+                    }
+                    
+                    
+                    Layout.updateUserEditedVideos(VideoModel: layout!)
                     
                     if let ultraHighQualityImage = captureUltraHighQualityImage(from: viewCenter, manualScale: 10.0) {
                         

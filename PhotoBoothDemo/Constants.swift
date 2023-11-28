@@ -72,20 +72,6 @@ let dynamicLayoutThree = ViewsLayout(views: [
 
 var arrDynamicLayouts: [ViewsLayout] = [dynamicLayoutOne, dynamicLayoutTwo, dynamicLayoutThree]
 
-struct Layout {
-    var viewName: String
-    var indexSelected: Int
-//    var isPotrait: Bool
-//    var customShape: Bool? = false
-//    var shapeImage: String? = ""
-    var noOfViews: Int? = 1
-}
-
-
-let arrLayouts = [
-    Layout(viewName: "_4x6Layout1", indexSelected: 0,noOfViews: 3),
-    Layout(viewName: "_4x6Layout2", indexSelected: 1,noOfViews: 1)
-]
 
 extension UIView {
     class func fromNib<T: UIView>() -> T {
@@ -117,3 +103,8 @@ func captureUltraHighQualityImage(from view: UIView, manualScale: CGFloat = 4.0)
     
     return capturedImage
     }
+
+
+struct CUserDefaultsKey {
+    static var userSavedVideos = "userSavedVideos"
+}
