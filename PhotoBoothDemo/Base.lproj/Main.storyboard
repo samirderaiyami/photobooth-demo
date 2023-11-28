@@ -435,6 +435,7 @@
                         <outlet property="btnGo" destination="AYc-sU-KhG" id="5UB-2X-oAK"/>
                         <outlet property="cameraView" destination="PwK-u6-bxh" id="fq0-v5-8s6"/>
                         <outlet property="collectionView" destination="JUQ-JO-jJ5" id="9Qb-02-AIs"/>
+                        <outlet property="heightOfHeader" destination="s2g-PC-KSp" id="Zje-px-HdI"/>
                         <outlet property="noOfLayouts" destination="hY3-TA-j6g" id="dZj-Gx-0dw"/>
                         <outlet property="testImageView" destination="6B8-KS-PFd" id="o9E-1B-X0b"/>
                         <outlet property="viewCenter" destination="TIE-3v-sAX" id="QJw-Zq-Cdm"/>
@@ -772,13 +773,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

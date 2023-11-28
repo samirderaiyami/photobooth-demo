@@ -42,15 +42,17 @@ class CustomCameraViewController: UIViewController {
     @IBOutlet weak var viewPhotoBox: UIView!
     @IBOutlet weak var btnGo: UIButton!
     @IBOutlet weak var viewCenter: UIView!
-    
+    @IBOutlet weak var heightOfHeader: NSLayoutConstraint!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         noOfLayouts.text = "1 / \(layout?.noOfViews ?? 1)"
         addViews()
-        
+        setupCameraWithOverlay(holeHeight: <#CGFloat#>, holeWidth: <#CGFloat#>)
         self.setupCaptureSession()
         setupCameraWithOverlay(holeHeight: arrPhotoboothImageViews[0].frame.height, holeWidth: arrPhotoboothImageViews[0].frame.width)
+        heightOfHeader.constant = 100
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.viewCenter.isHidden = false
@@ -337,51 +339,47 @@ extension CustomCameraViewController: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let imageData = photo.fileDataRepresentation(), let image = UIImage(data: imageData) {
-            var image = image
             
-//            testImageView.image = image
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-//                self.testImageView.image = self.cropToBounds(image: image, width: self.cameraOverlayView.frame.width, height: self.cameraOverlayView.frame.height)
-//            })
-//            return
-
-            if isFrontCamera {
-                image = self.flipImageHorizontally(image)!
-            }
-            
-            arrPhotoboothImages.append(image)
-            self.collectionView.reloadData()
-            
-            for (index,item) in arrPhotoboothImages.enumerated() {
-                let currentView = arrPhotoboothImageViews[index]
-                let imageView = UIImageView()
-                imageView.backgroundColor = UIColor.red
-                imageView.image = item
-                imageView.frame = currentView.bounds
-                imageView.contentMode = .scaleToFill
-                currentView.addSubview(imageView)
-            }
-            
-            noOfLayouts.text = "\(arrPhotoboothImages.count + 1) / \(layout?.noOfViews ?? 1)"
-            
-            //.. Update overlay
-            removeOverlayIfExists()
-                        
-            if arrPhotoboothImages.count == layout?.noOfViews ?? 0 {
-                print("Finished!")
+            if var croppedImage = image.cropToRect(rect: CGRect(x: 0, y: 0, width: self.cameraOverlayView.holeWidth, height: self.cameraOverlayView.holeHeight)) {
                 
-                if let ultraHighQualityImage = captureUltraHighQualityImage(from: viewCenter, manualScale: 10.0) {
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-                        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YourPhotoVC") as! YourPhotoVC
-                        vc.finalImage = ultraHighQualityImage//self.viewCenter.asImage()
-                        vc.layout = self.layout
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    })
+                if isFrontCamera {
+                    croppedImage = self.flipImageHorizontally(croppedImage)!
                 }
-            } else {
-                setupCameraWithOverlay(holeHeight: arrPhotoboothImageViews[arrPhotoboothImages.count].frame.height, holeWidth: arrPhotoboothImageViews[arrPhotoboothImages.count].frame.width)
+                
+                arrPhotoboothImages.append(croppedImage)
+                
+                self.collectionView.reloadData()
+                
+                for (index,item) in arrPhotoboothImages.enumerated() {
+                    let currentView = arrPhotoboothImageViews[index]
+                    let imageView = UIImageView()
+                    imageView.backgroundColor = UIColor.red
+                    imageView.image = item
+                    imageView.frame = currentView.bounds
+                    imageView.contentMode = .scaleToFill
+                    currentView.addSubview(imageView)
+                }
+                
+                noOfLayouts.text = "\(arrPhotoboothImages.count + 1) / \(layout?.noOfViews ?? 1)"
+                
+                //.. Update overlay
+                removeOverlayIfExists()
+                
+                if arrPhotoboothImages.count == layout?.noOfViews ?? 0 {
+                    print("Finished!")
+                    
+                    if let ultraHighQualityImage = captureUltraHighQualityImage(from: viewCenter, manualScale: 10.0) {
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                            let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "YourPhotoVC") as! YourPhotoVC
+                            vc.finalImage = ultraHighQualityImage//self.viewCenter.asImage()
+                            vc.layout = self.layout
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        })
+                    }
+                } else {
+                    setupCameraWithOverlay(holeHeight: arrPhotoboothImageViews[arrPhotoboothImages.count].frame.height, holeWidth: arrPhotoboothImageViews[arrPhotoboothImages.count].frame.width)
+                }
             }
         }
     }
@@ -408,7 +406,7 @@ extension CustomCameraViewController: AVCapturePhotoCaptureDelegate {
         
         return UIImage(cgImage: croppedCgImage, scale: capturedImage.scale, orientation: capturedImage.imageOrientation)
     }
-
+    
 }
 
 
@@ -429,3 +427,20 @@ extension CustomCameraViewController: UICollectionViewDelegate, UICollectionView
     }
     
 }
+extension UIImage {
+    func cropToRect(rect: CGRect) -> UIImage? {
+        var scale = rect.width / self.size.width
+        scale = self.size.height * scale < rect.height ? rect.height/self.size.height : scale
+        
+        let croppedImsize = CGSize(width:rect.width/scale, height:rect.height/scale)
+        let croppedImrect = CGRect(origin: CGPoint(x: (self.size.width-croppedImsize.width)/2.0,
+                                                   y: (self.size.height-croppedImsize.height)/2.0),
+                                   size: croppedImsize)
+        UIGraphicsBeginImageContextWithOptions(croppedImsize, true, 0)
+        self.draw(at: CGPoint(x:-croppedImrect.origin.x, y:-croppedImrect.origin.y))
+        let croppedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return croppedImage
+    }
+}
+
