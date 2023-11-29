@@ -598,7 +598,7 @@
                                     <constraint firstItem="rzQ-qD-mYp" firstAttribute="top" secondItem="RYP-bP-58V" secondAttribute="top" id="tZD-W7-SLn"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBo-34-rIC" customClass="JLStickerImageView" customModule="PhotoBoothDemo" customModuleProvider="target">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XBo-34-rIC" customClass="JLStickerImageView" customModule="PhotoBoothDemo" customModuleProvider="target">
                                 <rect key="frame" x="49" y="217" width="295" height="443"/>
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zWv-w8-dgg">
