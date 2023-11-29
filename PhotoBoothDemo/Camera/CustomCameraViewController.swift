@@ -41,7 +41,7 @@ class CustomCameraViewController: UIViewController {
     
     @IBOutlet weak var viewPhotoBox: UIView!
     @IBOutlet weak var btnGo: UIButton!
-    @IBOutlet weak var viewCenter: UIView!
+    @IBOutlet weak var viewCenter: JLStickerImageView!
     @IBOutlet weak var heightOfHeader: NSLayoutConstraint!
 
     
@@ -56,6 +56,9 @@ class CustomCameraViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.viewCenter.isHidden = false
         })
+        
+        setupLayoutData()
+
     }
     
     
@@ -368,16 +371,6 @@ extension CustomCameraViewController: AVCapturePhotoCaptureDelegate {
                 if arrPhotoboothImages.count == layout?.noOfViews ?? 0 {
                     print("Finished!")
                     
-                    layout?.images = []
-                    for image in arrPhotoboothImages {
-                        if let data = image.jpegData(compressionQuality: 0.5) {
-                            layout?.images.append(data)
-                        }
-                    }
-                    
-                    
-                    Layout.updateUserEditedVideos(VideoModel: layout!)
-                    
                     if let ultraHighQualityImage = captureUltraHighQualityImage(from: viewCenter, manualScale: 10.0) {
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
@@ -454,3 +447,58 @@ extension UIImage {
     }
 }
 
+extension CustomCameraViewController {
+    
+    func setupLayoutData() {
+        
+        if let layout = layout {
+            
+            //.. Background Color
+            viewCenter.backgroundColor = UIColor.hexStringToUIColor(hex: layout.layoutBackgroundColor ?? "ffffff")
+            
+            //.. Stickers
+            if layout.steakers.count > 0 {
+                for item in layout.steakers {
+                    addSticker(frame: item.location, name: item.imgName)
+                }
+            }
+            
+            //.. Texts
+            if layout.texts.count > 0 {
+                for item in layout.texts {
+                    addLabel(withText: item.text, withFrame: item.location)
+                }
+            }
+          
+        }
+    }
+
+    func addSticker(frame: CGRect, name: String) {
+        
+        //.. Hide the label borders before save
+        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
+        
+        let sticker = IRStickerView(frame: frame, contentImage: UIImage.init(named: "\(name)")!)
+        sticker.stickerMinScale = 0
+        sticker.stickerMaxScale = 0
+        sticker.enabledControl = false
+        sticker.enabledBorder = false
+        sticker.tag = 3
+        viewCenter.addSubview(sticker)
+    }
+    
+    func addLabel(withText: String, withFrame: CGRect) {
+        
+        viewCenter.addLabel(withText: withText, withFrame: withFrame)
+        
+        //Modify the Label
+        viewCenter.textColor = UIColor.black
+        viewCenter.textAlpha = 1
+        
+        viewCenter.currentlyEditingLabel.closeView!.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_delete.png")
+        viewCenter.currentlyEditingLabel.rotateView?.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_resize.png")
+        viewCenter.currentlyEditingLabel.closeView?.layer.cornerRadius = 16
+        viewCenter.currentlyEditingLabel.rotateView?.layer.cornerRadius = 16
+        
+    }
+}

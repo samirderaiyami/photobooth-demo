@@ -22,27 +22,41 @@ class Sticker: Codable {
     }
 }
 
+class Text: Codable {
+    var text: String
+    var location: CGRect
+    
+    init(text: String, location: CGRect) {
+        self.text = text
+        self.location = location
+    }
+}
+
 class Layout: Codable {
     
     var id: Int
     var viewName: String
     var indexSelected: Int
-    //    var isPotrait: Bool
-    //    var customShape: Bool? = false
-    //    var shapeImage: String? = ""
     var noOfViews: Int? = 1
     var previewImage: Data?
     var steakers: [Sticker] = []
-    var images: [Data] = []
+    
+    //.. Text
+    var texts: [Text] = []
 
-    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], images: [Data]? = [], previewImage: Data? = nil) {
+    var layoutBackgroundColor: String? = "ffffff"
+
+    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], previewImage: Data? = nil, texts: [Text]? = [], irStickers: [Data]? = [], layoutBackgroundColor: String? = "ffffff") {
         self.id = id
         self.viewName = viewName
         self.indexSelected = indexSelected
         self.noOfViews = noOfViews
         self.steakers = steakers ?? []
-        self.images = images ?? []
         self.previewImage = previewImage
+        self.texts = texts ?? []
+        
+        self.layoutBackgroundColor = layoutBackgroundColor
+
     }
 
     public static func saveUserEditedLayouts(layout: Layout){
@@ -78,6 +92,15 @@ class Layout: Codable {
         }
         let videosData = try! JSONEncoder().encode(userVideos)
         UserDefaults.standard.set(videosData, forKey: CUserDefaultsKey.userSavedVideos)
+    }
+    
+    public static func deleteUserEditedVideos(id: Int){
+        var userVideos = getUserEditedVideos()
+        if let index = userVideos.firstIndex(where: {$0.id == id}) {
+            userVideos.remove(at: index)
+            let videosData = try! JSONEncoder().encode(userVideos)
+            UserDefaults.standard.set(videosData, forKey: CUserDefaultsKey.userSavedVideos)
+        }
     }
 
 }

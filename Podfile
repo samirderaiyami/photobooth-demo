@@ -7,6 +7,7 @@ target 'PhotoBoothDemo' do
 
   # Pods for PhotoBoothDemo
 pod 'DevicePpi'
+pod 'IQKeyboardManagerSwift'
 
 
 end

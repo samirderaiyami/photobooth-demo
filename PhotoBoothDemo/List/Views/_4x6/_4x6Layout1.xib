@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="_4x6Layout1" customModule="PhotoBoothDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="295" height="443"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0SR-kv-gAp">
+                    <rect key="frame" x="21" y="30" width="253" height="140"/>
+                    <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="140" id="mwn-jI-Zns"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oen-WY-z09">
+                    <rect key="frame" x="21" y="184" width="118" height="140"/>
+                    <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="140" id="79b-aP-JJW"/>
+                        <constraint firstAttribute="width" constant="118" id="GH5-vI-OxP"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRW-xu-KOs">
+                    <rect key="frame" x="156" y="184" width="118" height="140"/>
+                    <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="0SR-kv-gAp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="1Mx-la-rBd"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="0SR-kv-gAp" secondAttribute="trailing" constant="21" id="7Uw-lt-j1b"/>
+                <constraint firstItem="fRW-xu-KOs" firstAttribute="trailing" secondItem="0SR-kv-gAp" secondAttribute="trailing" id="I2o-fs-c86"/>
+                <constraint firstItem="fRW-xu-KOs" firstAttribute="top" secondItem="oen-WY-z09" secondAttribute="top" id="LOP-fv-Eko"/>
+                <constraint firstItem="oen-WY-z09" firstAttribute="top" secondItem="0SR-kv-gAp" secondAttribute="bottom" constant="14" id="Qf7-wk-Epp"/>
+                <constraint firstItem="fRW-xu-KOs" firstAttribute="height" secondItem="oen-WY-z09" secondAttribute="height" id="eDu-nK-1z8"/>
+                <constraint firstItem="fRW-xu-KOs" firstAttribute="leading" secondItem="oen-WY-z09" secondAttribute="trailing" constant="17" id="fzL-x5-OSJ"/>
+                <constraint firstItem="0SR-kv-gAp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="21" id="lKz-X9-s4k"/>
+                <constraint firstItem="fRW-xu-KOs" firstAttribute="width" secondItem="oen-WY-z09" secondAttribute="width" id="mfI-Yb-LIW"/>
+                <constraint firstItem="oen-WY-z09" firstAttribute="leading" secondItem="0SR-kv-gAp" secondAttribute="leading" id="sb8-aj-KZQ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="0.0"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="view1" destination="0SR-kv-gAp" id="xHD-3e-K18"/>
+                <outlet property="view2" destination="oen-WY-z09" id="xTT-gb-mLv"/>
+                <outlet property="view3" destination="fRW-xu-KOs" id="h6F-hr-SVc"/>
+            </connections>
+            <point key="canvasLocation" x="-461.83206106870227" y="-644.0140845070423"/>
+        </view>
+    </objects>
+</document>

@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol JLStickerImageViewDelegate {
+    func showFontToolbar()
+    func hideFontToolbar()
+}
+
 public class JLStickerImageView: UIImageView, UIGestureRecognizerDelegate {
     public var currentlyEditingLabel: JLStickerLabelView!
     public var labels: NSMutableArray!
     public var renderedView: UIView!
+    var delegate: JLStickerImageViewDelegate?
     
     public lazy var tapOutsideGestureRecognizer: UITapGestureRecognizer! = {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(JLStickerImageView.tapOutside))
@@ -47,18 +53,16 @@ public class JLStickerImageView: UIImageView, UIGestureRecognizerDelegate {
 //MARK: -
 //MARK: Functions
 extension JLStickerImageView {
-    public func addLabel() {
+    public func addLabel(withText: String, withFrame: CGRect) {
         if let label: JLStickerLabelView = currentlyEditingLabel {
             label.hideEditingHandlers()
         }
-        let labelFrame = CGRect(x: self.bounds.midX - CGFloat(arc4random()).truncatingRemainder(dividingBy: 20),
-                                y: self.bounds.midY - CGFloat(arc4random()).truncatingRemainder(dividingBy: 20),
-                                width: 60, height: 50)
-        let labelView = JLStickerLabelView(frame: labelFrame)
+        let labelView = JLStickerLabelView(frame: withFrame)
         labelView.delegate = self
         labelView.showsContentShadow = false
         labelView.enableMoveRestriction = false
         labelView.labelTextView.backgroundColor = .clear
+        labelView.labelTextView.text = withText
         labelView.labelTextView.fontName = "Baskerville-BoldItalic"
         self.addSubview(labelView)
         self.currentlyEditingLabel = labelView
@@ -128,17 +132,17 @@ extension JLStickerImageView: JLStickerLabelViewDelegate {
     
     public func labelViewDidShowEditingHandles(_ label: JLStickerLabelView) {
         currentlyEditingLabel = label
-        
+        self.delegate?.showFontToolbar()
     }
     
     public func labelViewDidHideEditingHandles(_ label: JLStickerLabelView) {
         currentlyEditingLabel = nil
+        self.delegate?.hideFontToolbar()
         
     }
     
     public func labelViewDidStartEditing(_ label: JLStickerLabelView) {
         currentlyEditingLabel = label
-        
     }
     
     public func labelViewDidChangeEditing(_ label: JLStickerLabelView) {

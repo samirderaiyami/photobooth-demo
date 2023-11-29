@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="FGO-Fb-2mJ" customClass="_4x6Layout2" customModule="PhotoBoothDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="295" height="443"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGY-Gw-soG">
+                    <rect key="frame" x="21" y="30" width="253" height="140"/>
+                    <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="140" id="lWS-CC-MtX"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="dXT-xd-6KN"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="EGY-Gw-soG" firstAttribute="leading" secondItem="dXT-xd-6KN" secondAttribute="leading" constant="21" id="0ip-cZ-l0y"/>
+                <constraint firstItem="EGY-Gw-soG" firstAttribute="top" secondItem="FGO-Fb-2mJ" secondAttribute="top" constant="30" id="68a-3Y-hJl"/>
+                <constraint firstItem="dXT-xd-6KN" firstAttribute="trailing" secondItem="EGY-Gw-soG" secondAttribute="trailing" constant="21" id="yN7-Fl-GUL"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="0.0"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="view1" destination="EGY-Gw-soG" id="Syz-ym-LOU"/>
+            </connections>
+            <point key="canvasLocation" x="-461.83206106870227" y="-644.0140845070423"/>
+        </view>
+    </objects>
+</document>

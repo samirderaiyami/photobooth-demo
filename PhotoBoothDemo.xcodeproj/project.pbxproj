@@ -14,23 +14,12 @@
 		B84E98C92B0C956F00A3E809 /* LayoutCollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84E98C72B0C956F00A3E809 /* LayoutCollCell.swift */; };
 		B84E98CA2B0C956F00A3E809 /* LayoutCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B84E98C82B0C956F00A3E809 /* LayoutCollCell.xib */; };
 		B84E98D92B0CADE300A3E809 /* ExtensionsUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84E98D82B0CADE200A3E809 /* ExtensionsUIView.swift */; };
-		B89B5B1C2B0DDD7500CE631D /* LayoutHView4.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B5B1A2B0DDD7500CE631D /* LayoutHView4.swift */; };
-		B89B5B1D2B0DDD7500CE631D /* LayoutHView4.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89B5B1B2B0DDD7500CE631D /* LayoutHView4.xib */; };
-		B89B5B202B0DE9FF00CE631D /* LayoutVView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89B5B1E2B0DE9FF00CE631D /* LayoutVView2.xib */; };
-		B89B5B212B0DE9FF00CE631D /* LayoutVView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B5B1F2B0DE9FF00CE631D /* LayoutVView2.swift */; };
-		B89B5B242B0DEA4D00CE631D /* LayoutVView3.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89B5B222B0DEA4D00CE631D /* LayoutVView3.xib */; };
-		B89B5B252B0DEA4D00CE631D /* LayoutVView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B5B232B0DEA4D00CE631D /* LayoutVView3.swift */; };
-		B89B5B2B2B0DFE4100CE631D /* LayoutVView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89B5B292B0DFE4100CE631D /* LayoutVView5.xib */; };
-		B89B5B2C2B0DFE4100CE631D /* LayoutVView5.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B5B2A2B0DFE4100CE631D /* LayoutVView5.swift */; };
-		B89B5B2F2B0DFE4600CE631D /* LayoutVView6.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B5B2D2B0DFE4600CE631D /* LayoutVView6.swift */; };
-		B89B5B302B0DFE4600CE631D /* LayoutVView6.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89B5B2E2B0DFE4600CE631D /* LayoutVView6.xib */; };
-		B89B5B342B0DFE4D00CE631D /* LayoutVView7.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89B5B322B0DFE4D00CE631D /* LayoutVView7.swift */; };
-		B89B5B352B0DFE4D00CE631D /* LayoutVView7.xib in Resources */ = {isa = PBXBuildFile; fileRef = B89B5B332B0DFE4D00CE631D /* LayoutVView7.xib */; };
 		B8B45C932B0F4EB8001B45D1 /* _4x6Layout1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B45C912B0F4EB8001B45D1 /* _4x6Layout1.swift */; };
 		B8B45C942B0F4EB8001B45D1 /* _4x6Layout1.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B45C922B0F4EB8001B45D1 /* _4x6Layout1.xib */; };
 		B8B45C972B0F5078001B45D1 /* _4x6Layout2.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8B45C952B0F5078001B45D1 /* _4x6Layout2.xib */; };
 		B8B45C982B0F5078001B45D1 /* _4x6Layout2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B45C962B0F5078001B45D1 /* _4x6Layout2.swift */; };
 		B8C18AD42B1088DA000CE3D6 /* CameraPhotoCollCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C18AD32B1088DA000CE3D6 /* CameraPhotoCollCell.swift */; };
+		B8CBB58D2B1730C000C6687A /* UIColorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CBB58C2B1730C000C6687A /* UIColorExtention.swift */; };
 		B8D1BB6D2B04BD34008A8C48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1BB6C2B04BD34008A8C48 /* AppDelegate.swift */; };
 		B8D1BB6F2B04BD34008A8C48 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1BB6E2B04BD34008A8C48 /* SceneDelegate.swift */; };
 		B8D1BB742B04BD34008A8C48 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D1BB722B04BD34008A8C48 /* Main.storyboard */; };
@@ -53,8 +42,6 @@
 		B8DA434D2B16096D00EAB040 /* btn_flip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43482B16096D00EAB040 /* btn_flip@2x.png */; };
 		B8DA434E2B16096D00EAB040 /* sticker3.png in Resources */ = {isa = PBXBuildFile; fileRef = B8DA43492B16096D00EAB040 /* sticker3.png */; };
 		B8DA43542B160CDA00EAB040 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA43532B160CDA00EAB040 /* Layout.swift */; };
-		B8DCF2242B0DD80700643E05 /* LayoutVView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DCF2232B0DD80700643E05 /* LayoutVView1.swift */; };
-		B8DCF2262B0DD81100643E05 /* LayoutVView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = B8DCF2252B0DD81100643E05 /* LayoutVView1.xib */; };
 		B8EAD9952B10A76E00943018 /* YourPhotoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAD9942B10A76E00943018 /* YourPhotoVC.swift */; };
 		B8EAD9972B10B88C00943018 /* CameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAD9962B10B88C00943018 /* CameraOverlayView.swift */; };
 /* End PBXBuildFile section */
@@ -68,23 +55,12 @@
 		B84E98C72B0C956F00A3E809 /* LayoutCollCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCollCell.swift; sourceTree = "<group>"; };
 		B84E98C82B0C956F00A3E809 /* LayoutCollCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LayoutCollCell.xib; sourceTree = "<group>"; };
 		B84E98D82B0CADE200A3E809 /* ExtensionsUIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionsUIView.swift; sourceTree = "<group>"; };
-		B89B5B1A2B0DDD7500CE631D /* LayoutHView4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutHView4.swift; sourceTree = "<group>"; };
-		B89B5B1B2B0DDD7500CE631D /* LayoutHView4.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutHView4.xib; sourceTree = "<group>"; };
-		B89B5B1E2B0DE9FF00CE631D /* LayoutVView2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutVView2.xib; sourceTree = "<group>"; };
-		B89B5B1F2B0DE9FF00CE631D /* LayoutVView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutVView2.swift; sourceTree = "<group>"; };
-		B89B5B222B0DEA4D00CE631D /* LayoutVView3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutVView3.xib; sourceTree = "<group>"; };
-		B89B5B232B0DEA4D00CE631D /* LayoutVView3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutVView3.swift; sourceTree = "<group>"; };
-		B89B5B292B0DFE4100CE631D /* LayoutVView5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutVView5.xib; sourceTree = "<group>"; };
-		B89B5B2A2B0DFE4100CE631D /* LayoutVView5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutVView5.swift; sourceTree = "<group>"; };
-		B89B5B2D2B0DFE4600CE631D /* LayoutVView6.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutVView6.swift; sourceTree = "<group>"; };
-		B89B5B2E2B0DFE4600CE631D /* LayoutVView6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutVView6.xib; sourceTree = "<group>"; };
-		B89B5B322B0DFE4D00CE631D /* LayoutVView7.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutVView7.swift; sourceTree = "<group>"; };
-		B89B5B332B0DFE4D00CE631D /* LayoutVView7.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LayoutVView7.xib; sourceTree = "<group>"; };
 		B8B45C912B0F4EB8001B45D1 /* _4x6Layout1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _4x6Layout1.swift; sourceTree = "<group>"; };
 		B8B45C922B0F4EB8001B45D1 /* _4x6Layout1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = _4x6Layout1.xib; sourceTree = "<group>"; };
 		B8B45C952B0F5078001B45D1 /* _4x6Layout2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = _4x6Layout2.xib; sourceTree = "<group>"; };
 		B8B45C962B0F5078001B45D1 /* _4x6Layout2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _4x6Layout2.swift; sourceTree = "<group>"; };
 		B8C18AD32B1088DA000CE3D6 /* CameraPhotoCollCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPhotoCollCell.swift; sourceTree = "<group>"; };
+		B8CBB58C2B1730C000C6687A /* UIColorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtention.swift; sourceTree = "<group>"; };
 		B8D1BB692B04BD34008A8C48 /* PhotoBoothDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBoothDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8D1BB6C2B04BD34008A8C48 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8D1BB6E2B04BD34008A8C48 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,8 +85,6 @@
 		B8DA43482B16096D00EAB040 /* btn_flip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_flip@2x.png"; sourceTree = "<group>"; };
 		B8DA43492B16096D00EAB040 /* sticker3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sticker3.png; sourceTree = "<group>"; };
 		B8DA43532B160CDA00EAB040 /* Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
-		B8DCF2232B0DD80700643E05 /* LayoutVView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutVView1.swift; sourceTree = "<group>"; };
-		B8DCF2252B0DD81100643E05 /* LayoutVView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LayoutVView1.xib; sourceTree = "<group>"; };
 		B8EAD9942B10A76E00943018 /* YourPhotoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YourPhotoVC.swift; sourceTree = "<group>"; };
 		B8EAD9962B10B88C00943018 /* CameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
 		E9EFF3FE85ED5438D711A02A /* Pods-PhotoBoothDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoothDemo.release.xcconfig"; path = "Target Support Files/Pods-PhotoBoothDemo/Pods-PhotoBoothDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,48 +132,15 @@
 		B84E98C42B0C952300A3E809 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B8B45C8D2B0F4E40001B45D1 /* Figma */,
-				B89B5B312B0DFE4D00CE631D /* 7 */,
-				B89B5B282B0DFD4600CE631D /* 6 */,
-				B89B5B272B0DFD4200CE631D /* 5 */,
-				B8C9CB232B0CDF0B00AF95FD /* 4 */,
-				B84E98CD2B0C962000A3E809 /* 3 */,
-				B84E98CC2B0C961A00A3E809 /* 2 */,
-				B84E98CB2B0C960C00A3E809 /* 1 */,
+				B8B45C8E2B0F4E45001B45D1 /* _4x6 */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		B84E98CB2B0C960C00A3E809 /* 1 */ = {
-			isa = PBXGroup;
-			children = (
-				B8DCF2232B0DD80700643E05 /* LayoutVView1.swift */,
-				B8DCF2252B0DD81100643E05 /* LayoutVView1.xib */,
-			);
-			path = 1;
-			sourceTree = "<group>";
-		};
-		B84E98CC2B0C961A00A3E809 /* 2 */ = {
-			isa = PBXGroup;
-			children = (
-				B89B5B1F2B0DE9FF00CE631D /* LayoutVView2.swift */,
-				B89B5B1E2B0DE9FF00CE631D /* LayoutVView2.xib */,
-			);
-			path = 2;
-			sourceTree = "<group>";
-		};
-		B84E98CD2B0C962000A3E809 /* 3 */ = {
-			isa = PBXGroup;
-			children = (
-				B89B5B232B0DEA4D00CE631D /* LayoutVView3.swift */,
-				B89B5B222B0DEA4D00CE631D /* LayoutVView3.xib */,
-			);
-			path = 3;
 			sourceTree = "<group>";
 		};
 		B84E98D72B0CADDA00A3E809 /* Oher */ = {
 			isa = PBXGroup;
 			children = (
+				B8CBB58B2B1730AF00C6687A /* Extention */,
 				B8DA43352B16082600EAB040 /* JLStickerTextView */,
 				B8DA43132B15FDDC00EAB040 /* IRSticker-swift */,
 				B84E98D82B0CADE200A3E809 /* ExtensionsUIView.swift */,
@@ -215,33 +156,6 @@
 				B84E98C82B0C956F00A3E809 /* LayoutCollCell.xib */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		B89B5B272B0DFD4200CE631D /* 5 */ = {
-			isa = PBXGroup;
-			children = (
-				B89B5B2A2B0DFE4100CE631D /* LayoutVView5.swift */,
-				B89B5B292B0DFE4100CE631D /* LayoutVView5.xib */,
-			);
-			path = 5;
-			sourceTree = "<group>";
-		};
-		B89B5B282B0DFD4600CE631D /* 6 */ = {
-			isa = PBXGroup;
-			children = (
-				B89B5B2D2B0DFE4600CE631D /* LayoutVView6.swift */,
-				B89B5B2E2B0DFE4600CE631D /* LayoutVView6.xib */,
-			);
-			path = 6;
-			sourceTree = "<group>";
-		};
-		B89B5B312B0DFE4D00CE631D /* 7 */ = {
-			isa = PBXGroup;
-			children = (
-				B89B5B322B0DFE4D00CE631D /* LayoutVView7.swift */,
-				B89B5B332B0DFE4D00CE631D /* LayoutVView7.xib */,
-			);
-			path = 7;
 			sourceTree = "<group>";
 		};
 		B8B45C8B2B0F3978001B45D1 /* Design */ = {
@@ -261,15 +175,7 @@
 			path = Camera;
 			sourceTree = "<group>";
 		};
-		B8B45C8D2B0F4E40001B45D1 /* Figma */ = {
-			isa = PBXGroup;
-			children = (
-				B8B45C8E2B0F4E45001B45D1 /* 1200*1800 */,
-			);
-			path = Figma;
-			sourceTree = "<group>";
-		};
-		B8B45C8E2B0F4E45001B45D1 /* 1200*1800 */ = {
+		B8B45C8E2B0F4E45001B45D1 /* _4x6 */ = {
 			isa = PBXGroup;
 			children = (
 				B8B45C912B0F4EB8001B45D1 /* _4x6Layout1.swift */,
@@ -277,7 +183,7 @@
 				B8B45C962B0F5078001B45D1 /* _4x6Layout2.swift */,
 				B8B45C952B0F5078001B45D1 /* _4x6Layout2.xib */,
 			);
-			path = "1200*1800";
+			path = _4x6;
 			sourceTree = "<group>";
 		};
 		B8C18AD22B1088C7000CE3D6 /* Cell */ = {
@@ -288,13 +194,12 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		B8C9CB232B0CDF0B00AF95FD /* 4 */ = {
+		B8CBB58B2B1730AF00C6687A /* Extention */ = {
 			isa = PBXGroup;
 			children = (
-				B89B5B1A2B0DDD7500CE631D /* LayoutHView4.swift */,
-				B89B5B1B2B0DDD7500CE631D /* LayoutHView4.xib */,
+				B8CBB58C2B1730C000C6687A /* UIColorExtention.swift */,
 			);
-			path = 4;
+			path = Extention;
 			sourceTree = "<group>";
 		};
 		B8D1BB602B04BD34008A8C48 = {
@@ -473,9 +378,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8DA434E2B16096D00EAB040 /* sticker3.png in Resources */,
-				B89B5B352B0DFE4D00CE631D /* LayoutVView7.xib in Resources */,
-				B8DCF2262B0DD81100643E05 /* LayoutVView1.xib in Resources */,
-				B89B5B202B0DE9FF00CE631D /* LayoutVView2.xib in Resources */,
 				B8D1BB792B04BD36008A8C48 /* LaunchScreen.storyboard in Resources */,
 				B84E98CA2B0C956F00A3E809 /* LayoutCollCell.xib in Resources */,
 				B8B45C942B0F4EB8001B45D1 /* _4x6Layout1.xib in Resources */,
@@ -484,13 +386,9 @@
 				B8DA43202B15FDDD00EAB040 /* IRSticker.bundle in Resources */,
 				B8DA434A2B16096D00EAB040 /* sticker1.png in Resources */,
 				B8DA434B2B16096D00EAB040 /* btn_smile@2x.png in Resources */,
-				B89B5B242B0DEA4D00CE631D /* LayoutVView3.xib in Resources */,
 				B8DA434D2B16096D00EAB040 /* btn_flip@2x.png in Resources */,
-				B89B5B302B0DFE4600CE631D /* LayoutVView6.xib in Resources */,
 				B8DA434C2B16096D00EAB040 /* sticker2.png in Resources */,
 				B8B45C972B0F5078001B45D1 /* _4x6Layout2.xib in Resources */,
-				B89B5B1D2B0DDD7500CE631D /* LayoutHView4.xib in Resources */,
-				B89B5B2B2B0DFE4100CE631D /* LayoutVView5.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,15 +441,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8DCF2242B0DD80700643E05 /* LayoutVView1.swift in Sources */,
 				B8C18AD42B1088DA000CE3D6 /* CameraPhotoCollCell.swift in Sources */,
 				B8B45C982B0F5078001B45D1 /* _4x6Layout2.swift in Sources */,
 				B84E98C22B0C943500A3E809 /* LayoutListVC.swift in Sources */,
 				B80E01082B0B6372006CE093 /* DesignPhotoBoothVC.swift in Sources */,
 				B8D1BB812B04C023008A8C48 /* CustomCameraViewController.swift in Sources */,
-				B89B5B2C2B0DFE4100CE631D /* LayoutVView5.swift in Sources */,
 				B8EAD9952B10A76E00943018 /* YourPhotoVC.swift in Sources */,
-				B89B5B1C2B0DDD7500CE631D /* LayoutHView4.swift in Sources */,
 				B8D1BB6D2B04BD34008A8C48 /* AppDelegate.swift in Sources */,
 				B84E98D92B0CADE300A3E809 /* ExtensionsUIView.swift in Sources */,
 				B84E98C02B0C7EA300A3E809 /* Constants.swift in Sources */,
@@ -561,18 +456,15 @@
 				B8DA43222B15FDDD00EAB040 /* IRStickerGestureRecognizer.swift in Sources */,
 				B84E98C92B0C956F00A3E809 /* LayoutCollCell.swift in Sources */,
 				B8EAD9972B10B88C00943018 /* CameraOverlayView.swift in Sources */,
-				B89B5B212B0DE9FF00CE631D /* LayoutVView2.swift in Sources */,
+				B8CBB58D2B1730C000C6687A /* UIColorExtention.swift in Sources */,
 				B8B45C932B0F4EB8001B45D1 /* _4x6Layout1.swift in Sources */,
 				B8DA43422B16082600EAB040 /* CalcuteFunctions.swift in Sources */,
 				B8D1BB6F2B04BD34008A8C48 /* SceneDelegate.swift in Sources */,
 				B8DA43212B15FDDD00EAB040 /* IRStickerView.swift in Sources */,
-				B89B5B252B0DEA4D00CE631D /* LayoutVView3.swift in Sources */,
 				B8DA43432B16082600EAB040 /* adjustToFitFontOrWidth.swift in Sources */,
 				B8DA43242B15FDDD00EAB040 /* UIImage+Bundle.swift in Sources */,
 				B8DA43412B16082600EAB040 /* JLAttributedTextView.swift in Sources */,
 				B8DA433F2B16082600EAB040 /* JLStickerImageView.swift in Sources */,
-				B89B5B2F2B0DFE4600CE631D /* LayoutVView6.swift in Sources */,
-				B89B5B342B0DFE4D00CE631D /* LayoutVView7.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,24 +615,28 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A3X2NV7HPA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoBoothDemo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Photobooth;
 				INFOPLIST_KEY_NSCameraUsageDescription = CAMERA;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesanthonycastrejon.Hang-Man";
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricfrenchfries.lolfree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -755,24 +651,28 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A3X2NV7HPA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoBoothDemo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Photobooth;
 				INFOPLIST_KEY_NSCameraUsageDescription = CAMERA;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jamesanthonycastrejon.Hang-Man";
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricfrenchfries.lolfree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

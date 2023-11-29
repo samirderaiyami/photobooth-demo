@@ -1,16 +1,20 @@
 PODS:
   - DevicePpi (1.2.18)
+  - IQKeyboardManagerSwift (6.5.16)
 
 DEPENDENCIES:
   - DevicePpi
+  - IQKeyboardManagerSwift
 
 SPEC REPOS:
   trunk:
     - DevicePpi
+    - IQKeyboardManagerSwift
 
 SPEC CHECKSUMS:
   DevicePpi: 3db658ec52e8ec7c41cd59b8d061c91ea98b6c87
+  IQKeyboardManagerSwift: 12d89768845bb77b55cc092ecc2b1f9370f06b76
 
-PODFILE CHECKSUM: 23a5fd7fcb99ebfc7f5c43c6161f6daae9c166f5
+PODFILE CHECKSUM: 5e7b2036d0bd1d42d750e2825042f85ba4d0c634
 
 COCOAPODS: 1.11.3
