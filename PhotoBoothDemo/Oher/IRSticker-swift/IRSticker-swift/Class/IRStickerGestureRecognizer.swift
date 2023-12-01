@@ -9,11 +9,13 @@
 import UIKit
 
 class IRStickerGestureRecognizer: UIGestureRecognizer {
+    
     public var scale: CGFloat = 1
     public var rotation: CGFloat = 0
 
     var anchorView: UIView!
-    
+    public var cumulativeRotation: CGFloat = 0
+
     convenience init(target: Any?, action: Selector?, anchorView: UIView) {
         self.init(target: target, action: action)
         self.anchorView = anchorView
@@ -45,7 +47,13 @@ class IRStickerGestureRecognizer: UIGestureRecognizer {
         let previousRadius = self.distanceBetweenFirstPoint(first: previousPoint!, secondPoint: anchorViewCenter)
         let scale = currentRadius / previousRadius
         
-        self.rotation = CGFloat(currentRotation - previousRotation)
+        let deltaRotation = CGFloat(currentRotation - previousRotation)
+        self.cumulativeRotation += deltaRotation // Accumulate rotation
+        
+        // Update your existing rotation property if needed
+        self.rotation = deltaRotation
+
+//        self.rotation = CGFloat(currentRotation - previousRotation)
         self.scale = scale;
     }
     
@@ -68,6 +76,8 @@ class IRStickerGestureRecognizer: UIGestureRecognizer {
     }
     
     public func resetGesture() {
+        self.cumulativeRotation = 0 // Reset cumulative rotation
+
         self.rotation = 0;
         self.scale = 1;
     }

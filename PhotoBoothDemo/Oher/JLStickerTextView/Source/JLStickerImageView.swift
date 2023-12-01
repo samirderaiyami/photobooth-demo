@@ -11,6 +11,8 @@ import UIKit
 protocol JLStickerImageViewDelegate {
     func showFontToolbar()
     func hideFontToolbar()
+    func rotationValue()
+    func removeLabel(label: JLStickerLabelView)
 }
 
 public class JLStickerImageView: UIImageView, UIGestureRecognizerDelegate {
@@ -25,7 +27,8 @@ public class JLStickerImageView: UIImageView, UIGestureRecognizerDelegate {
         return tapGesture
         
     }()
-    
+    public var rotationAngle: CGFloat!
+
     //MARK: -
     //MARK: init
     
@@ -53,7 +56,30 @@ public class JLStickerImageView: UIImageView, UIGestureRecognizerDelegate {
 //MARK: -
 //MARK: Functions
 extension JLStickerImageView {
-    public func addLabel(withText: String, withFrame: CGRect) {
+    public func addDefaultLabel(defaultFrame: CGRect) {
+        
+        if let label: JLStickerLabelView = currentlyEditingLabel {
+            label.hideEditingHandlers()
+        }
+        
+        let labelView = JLStickerLabelView(frame: defaultFrame)
+        labelView.delegate = self
+        labelView.showsContentShadow = false
+        labelView.enableMoveRestriction = false
+        labelView.labelTextView.backgroundColor = .clear
+        labelView.labelTextView.text = "ENTER TEXT"
+        labelView.labelTextView.fontName = "Baskerville-BoldItalic"
+        self.addSubview(labelView)
+        
+        self.currentlyEditingLabel = labelView
+        self.adjustsWidthToFillItsContens(self.currentlyEditingLabel, labelView: self.currentlyEditingLabel.labelTextView)
+
+        self.labels.add(labelView)
+        self.addGestureRecognizer(tapOutsideGestureRecognizer)
+        
+    }
+    
+    public func addLabel(withText: String, withFrame: CGRect, fontName: String, fontSize: CGFloat, textColor: UIColor) {
         if let label: JLStickerLabelView = currentlyEditingLabel {
             label.hideEditingHandlers()
         }
@@ -63,12 +89,16 @@ extension JLStickerImageView {
         labelView.enableMoveRestriction = false
         labelView.labelTextView.backgroundColor = .clear
         labelView.labelTextView.text = withText
-        labelView.labelTextView.fontName = "Baskerville-BoldItalic"
+        labelView.labelTextView.fontName = fontName
+        labelView.labelTextView.fontSize = fontSize
+        labelView.labelTextView.textColor = textColor
+
         self.addSubview(labelView)
-        self.currentlyEditingLabel = labelView
-        adjustsWidthToFillItsContens(currentlyEditingLabel, labelView: currentlyEditingLabel.labelTextView)
-        self.labels.add(labelView)
         
+        self.currentlyEditingLabel = labelView
+        self.adjustsWidthToFillItsContens(self.currentlyEditingLabel, labelView: self.currentlyEditingLabel.labelTextView)
+        
+        self.labels.add(labelView)
         self.addGestureRecognizer(tapOutsideGestureRecognizer)
         
     }
@@ -127,7 +157,7 @@ extension JLStickerImageView: JLStickerLabelViewDelegate {
     }
     
     public func labelViewDidClose(_ label: JLStickerLabelView) {
-        
+        delegate?.removeLabel(label: label)
     }
     
     public func labelViewDidShowEditingHandles(_ label: JLStickerLabelView) {
@@ -146,7 +176,8 @@ extension JLStickerImageView: JLStickerLabelViewDelegate {
     }
     
     public func labelViewDidChangeEditing(_ label: JLStickerLabelView) {
-        
+        print(label.rotationAngle)
+        rotationAngle = label.rotationAngle
     }
     
     public func labelViewDidEndEditing(_ label: JLStickerLabelView) {

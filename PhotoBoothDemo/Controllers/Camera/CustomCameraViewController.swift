@@ -93,6 +93,8 @@ class CustomCameraViewController: UIViewController {
             
             myCustomView.translatesAutoresizingMaskIntoConstraints = false
             
+            myCustomView.tag = 120
+            
             // Add the subview to the cell
             self.viewCenter.addSubview(myCustomView)
             // Constraints for myCustomView to match cell size
@@ -109,6 +111,8 @@ class CustomCameraViewController: UIViewController {
         } else if layout?.indexSelected == 1 {
             let myCustomView: _4x6Layout2 = _4x6Layout2.fromNib()
             // Add the subview to the cell
+            
+            myCustomView.tag = 120
             
             myCustomView.translatesAutoresizingMaskIntoConstraints = false
             // Add the subview to the cell
@@ -456,49 +460,174 @@ extension CustomCameraViewController {
             //.. Background Color
             viewCenter.backgroundColor = UIColor.hexStringToUIColor(hex: layout.layoutBackgroundColor ?? "ffffff")
             
+            print("GET")
+            
+            
             //.. Stickers
             if layout.steakers.count > 0 {
-                for item in layout.steakers {
-                    addSticker(frame: item.location, name: item.imgName)
+                for (index,item) in layout.steakers.enumerated() {
+                    
+                    print("Index: \(index)")
+                    print("Frame: \(item.location)")
+                    
+                    addSticker(frame: item.location, name: item.imgName, rotationAngle: item.rotationAngle, scale: item.scale)
                 }
             }
             
             //.. Texts
             if layout.texts.count > 0 {
                 for item in layout.texts {
-                    addLabel(withText: item.text, withFrame: item.location)
+                    addLabel(textModel: item)
                 }
             }
-          
+            
+            adBackgroundImage()
         }
+        
+        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
     }
 
-    func addSticker(frame: CGRect, name: String) {
+    func addSticker(frame: CGRect, name: String, rotationAngle: CGFloat = 0.0, scale: CGRect? = nil) {
         
-        //.. Hide the label borders before save
-        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
+        let testImage = UIImageView.init(frame: frame)
+        testImage.image = UIImage(named: "smile_1")
+        testImage.contentMode = .scaleAspectFit
+        let stickerView3 = StickerView.init(contentView: testImage)
+        stickerView3.frame = frame
+        stickerView3.setImage(deleteImage!, forHandler: StickerViewHandler.close)
+        stickerView3.setImage(resizeImage!, forHandler: StickerViewHandler.rotate)
+        stickerView3.showEditingHandlers = false
+        stickerView3.outlineBorderColor = .clear
+        stickerView3.tag = 999
         
-        let sticker = IRStickerView(frame: frame, contentImage: UIImage.init(named: "\(name)")!)
-        sticker.stickerMinScale = 0
-        sticker.stickerMaxScale = 0
-        sticker.enabledControl = false
-        sticker.enabledBorder = false
-        sticker.tag = 3
-        viewCenter.addSubview(sticker)
+        self.viewCenter.addSubview(stickerView3)
+        
+        stickerView3.transform = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
+                
     }
     
-    func addLabel(withText: String, withFrame: CGRect) {
+    func addLabel(textModel: Text?) {
         
-        viewCenter.addLabel(withText: withText, withFrame: withFrame)
+        viewCenter.fontName = textModel?.font ?? "HelveticaNeue"
+        viewCenter.fontSize = textModel?.size ?? 20.0
+        viewCenter.textColor = colorWithHexString1(hexString: textModel?.color ?? "")
         
-        //Modify the Label
-        viewCenter.textColor = UIColor.black
-        viewCenter.textAlpha = 1
+        let size = CGSize(width: 207.03278410434723, height: 72.9441933631897)
+        var scaleFrame = textModel?.location
+        scaleFrame?.size = size
+        
+        viewCenter.addLabel(withText: textModel?.text ?? "", withFrame: textModel?.location ?? .zero, fontName: textModel?.font ?? "HelveticaNeue", fontSize: textModel?.size ?? 20.0, textColor: colorWithHexString1(hexString: textModel?.color ?? ""))
         
         viewCenter.currentlyEditingLabel.closeView!.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_delete.png")
         viewCenter.currentlyEditingLabel.rotateView?.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_resize.png")
         viewCenter.currentlyEditingLabel.closeView?.layer.cornerRadius = 16
         viewCenter.currentlyEditingLabel.rotateView?.layer.cornerRadius = 16
+        //
+        viewCenter.currentlyEditingLabel.transform = CGAffineTransform(rotationAngle: textModel?.rotationAngle ?? 0.0)
+        //
+        //        if textModel?.scaleRect != nil {
+        //            DispatchQueue.main.async {
+        ////                self.viewCenter.currentlyEditingLabel.bounds = textModel!.scaleRect
+        ////                self.viewCenter.currentlyEditingLabel.adjustsWidthToFillItsContens(self.viewCenter.currentlyEditingLabel, labelView: self.viewCenter.currentlyEditingLabel.labelTextView)
+        ////                self.viewCenter.currentlyEditingLabel.refresh()
+        //            }
+        //        }
+        //
         
     }
+
+    func colorWithHexString1(hexString: String) -> UIColor {
+        var cString: String = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if cString.hasPrefix("#") {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if (cString.count != 6) && (cString.count != 8) {
+            return UIColor.gray // Default color in case of wrong format
+        }
+        
+        var rgbValue: UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+        
+        let r = CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
+        let g = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
+        let b = CGFloat(rgbValue & 0x0000FF) / 255.0
+        let a = (cString.count == 8) ? CGFloat((rgbValue & 0xFF000000) >> 24) / 255.0 : 1.0
+        
+        return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
+    
+    func adBackgroundImage() {
+        
+        //.. Background Image
+        if let image = loadImage(nameOfImage: "\(self.layout?.id ?? 0)") {
+            let testImage = UIImageView.init(frame: self.viewCenter.bounds)
+            testImage.image = image
+            testImage.contentMode = .scaleAspectFill
+            let stickerView3 = StickerView.init(contentView: testImage)
+            stickerView3.frame = layout?.layoutBackgroundFrame ?? .zero
+            stickerView3.setImage(deleteImage!, forHandler: StickerViewHandler.close)
+            stickerView3.setImage(resizeImage!, forHandler: StickerViewHandler.rotate)
+            stickerView3.setImage(resizeImage!, forHandler: StickerViewHandler.flip)
+            stickerView3.showEditingHandlers = false
+            stickerView3.outlineBorderColor = .clear
+            stickerView3.clipsToBounds = true
+            stickerView3.tag = 1000
+            
+            stickerView3.transform = CGAffineTransform(rotationAngle: CGFloat(layout?.layoutBackgroundRotate ?? 0.0))
+            
+            if layout?.layoutBackgroundScale != nil {
+                stickerView3.bounds = layout!.layoutBackgroundScale!
+                stickerView3.setNeedsDisplay()
+            }
+            
+            if let view1 = self.viewCenter.viewWithTag(120) {
+                if let viewToRemove = view1.viewWithTag(1000) {
+                    viewToRemove.removeFromSuperview()
+                }
+                view1.insertSubview(stickerView3, at: 0)
+            }
+        }
+        
+    }
+
+}
+extension CustomCameraViewController {
+    
+    func loadImage(nameOfImage : String) -> UIImage? {
+        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+        
+        
+        if let dirPath = paths.first{
+            let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent("layout_\(nameOfImage)_background_image.jpg")
+            
+            if FileManager.default.fileExists(atPath: imageURL.path) {
+                let image    = UIImage(contentsOfFile: imageURL.path)
+                return image!
+            } else {
+                print("File not exists")
+                return nil
+            }
+        }
+        
+        return nil
+    }
+    
+    func saveImageToDocumentDirectory(name: String, image: UIImage ) {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileName = "\(name).jpg" // name of the image to be saved
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        if let data = image.jpegData(compressionQuality: 1.0),!FileManager.default.fileExists(atPath: fileURL.path){
+            do {
+                try data.write(to: fileURL)
+                print("file saved")
+            } catch {
+                print("error saving file:", error)
+            }
+        }
+    }
+    
 }

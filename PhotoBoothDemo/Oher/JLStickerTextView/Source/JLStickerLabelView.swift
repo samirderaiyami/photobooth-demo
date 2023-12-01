@@ -68,7 +68,10 @@ public class JLStickerLabelView: UIView {
             border?.strokeColor = borderColor?.cgColor
         }
     }
-    
+    public var rotationAngle: CGFloat = 0.0
+    public var scale: Float = 0.0
+    public var scaleRect: CGRect = .zero
+
     
     //MARK: -
     //MARK: Set Control Buttons
@@ -331,12 +334,15 @@ extension JLStickerLabelView: UIGestureRecognizerDelegate, adjustFontSizeToFillR
             
             let angleDiff = deltaAngle! - ang
             self.transform = CGAffineTransform(rotationAngle: -angleDiff)
+            self.rotationAngle = -angleDiff
             self.layoutIfNeeded()
             
             //Finding scale between current touchPoint and previous touchPoint
             let scale = sqrtf(Float(CalculateFunctions.CGpointGetDistance(center, point2: touchLocation!)) / Float(initialDistance!))
+            self.scale = scale
             let scaleRect = CalculateFunctions.CGRectScale(initialBounds!, wScale: CGFloat(scale), hScale: CGFloat(scale))
-            
+            self.scaleRect = scaleRect
+            print(scaleRect)
             if scaleRect.size.width >= (1 + globalInset! * 2) && scaleRect.size.height >= (1 + globalInset! * 2) && self.labelTextView.text != "" {
                 //  if fontSize < 100 || CGRectGetWidth(scaleRect) < CGRectGetWidth(self.bounds) {
                 if scale < 1 && labelTextView.fontSize <= 9 {

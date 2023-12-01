@@ -108,3 +108,13 @@ func captureUltraHighQualityImage(from view: UIView, manualScale: CGFloat = 4.0)
 struct CUserDefaultsKey {
     static var userSavedVideos = "userSavedVideos"
 }
+
+func documentDirectoryPath() -> URL? {
+    let path = FileManager.default.urls(for: .documentDirectory,
+                                        in: .userDomainMask)
+    return path.first
+}
+
+
+let deleteImage = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_delete.png")
+let resizeImage = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_resize.png")

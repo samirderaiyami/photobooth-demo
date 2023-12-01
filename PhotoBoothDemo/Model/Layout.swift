@@ -15,20 +15,36 @@ let arrLayouts = [
 class Sticker: Codable {
     var imgName: String
     var location: CGRect
-    
-    init(imgName: String, location: CGRect) {
+    var rotationAngle: CGFloat
+    var scale: CGRect
+    init(imgName: String, location: CGRect, rotationAngle: CGFloat, scale: CGRect) {
         self.imgName = imgName
         self.location = location
+        self.rotationAngle = rotationAngle
+        self.scale = scale
     }
 }
 
 class Text: Codable {
     var text: String
     var location: CGRect
+    var rotationAngle: CGFloat
+    var scale: Float
+    var scaleRect: CGRect
+    var font: String
+    var size: CGFloat
+    var color: String
     
-    init(text: String, location: CGRect) {
+    init(text: String, location: CGRect, rotationAngle: CGFloat, scale: Float, scaleRect: CGRect, font: String, size: CGFloat, color: String) {
         self.text = text
         self.location = location
+        self.rotationAngle = rotationAngle
+        self.scale = scale
+        self.scaleRect = scaleRect
+
+        self.font = font
+        self.size = size
+        self.color = color
     }
 }
 
@@ -45,8 +61,11 @@ class Layout: Codable {
     var texts: [Text] = []
 
     var layoutBackgroundColor: String? = "ffffff"
+    var layoutBackgroundFrame: CGRect?
+    var layoutBackgroundRotate: CGFloat?
+    var layoutBackgroundScale: CGRect?
 
-    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], previewImage: Data? = nil, texts: [Text]? = [], irStickers: [Data]? = [], layoutBackgroundColor: String? = "ffffff") {
+    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], previewImage: Data? = nil, texts: [Text]? = [], irStickers: [Data]? = [], layoutBackgroundColor: String? = "ffffff", layoutBackgroundFrame: CGRect? = nil, layoutBackgroundRotate: CGFloat? = 0.0, layoutBackgroundScale: CGRect? = nil) {
         self.id = id
         self.viewName = viewName
         self.indexSelected = indexSelected
@@ -56,6 +75,9 @@ class Layout: Codable {
         self.texts = texts ?? []
         
         self.layoutBackgroundColor = layoutBackgroundColor
+        self.layoutBackgroundFrame = layoutBackgroundFrame
+        self.layoutBackgroundRotate = layoutBackgroundRotate
+        self.layoutBackgroundScale = layoutBackgroundScale
 
     }
 

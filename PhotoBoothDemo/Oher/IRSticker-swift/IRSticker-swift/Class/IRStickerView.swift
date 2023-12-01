@@ -67,6 +67,9 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     var enableLeftBottomControl: Bool
     var enableRightBottomControl: Bool
     
+    public var currentRotationAngle: CGFloat = 0
+
+    
     public init(frame: CGRect, contentImage: UIImage, stickerControlViewSize: CGFloat = defaultStickerControlViewSize) {
         self.stickerControlViewSize = stickerControlViewSize
         self.enableRightTopControl = false
@@ -262,13 +265,15 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     }
     
     @objc func handleRotate(gesture: UIRotationGestureRecognizer) {
-        self.contentView.transform = self.contentView.transform.rotated(by: gesture.rotation)
-        gesture.rotation = 0;
+        let rotation = gesture.rotation
+        self.contentView.transform = self.contentView.transform.rotated(by: rotation)
+        gesture.rotation = 0
         
         relocalControlView()
     }
     
     @objc func handleSingleHandAction(gesture: IRStickerGestureRecognizer) {
+        /*
         var scale = gesture.scale;
         // Scale limit
         let currentScale: CGFloat = self.contentView.layer.value(forKeyPath: "transform.scale") as! CGFloat
@@ -281,8 +286,14 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
         }
         
         self.contentView.transform = self.contentView.transform.scaledBy(x: scale, y: scale)
+         */
+        
         self.contentView.transform = self.contentView.transform.rotated(by: gesture.rotation)
-        gesture.resetGesture()
+        UserDefaults.standard.set(gesture.cumulativeRotation, forKey: "savedRotation")
+
+//        self.currentRotationAngle = gesture.rotation
+//        
+//        delegate?.ir_StickerViewCurrentRotationAngle(rotationValue: <#T##CGFloat#>)
         
         relocalControlView()
     }
@@ -398,6 +409,12 @@ public class IRStickerView: UIView, UIGestureRecognizerDelegate {
     func setContentImage(contentImage: UIImage?) {
         self.contentView.image = contentImage;
     }
+    
+    func restoreStickerState(withRotationAngle angle: CGFloat) {
+        let rotationTransform = CGAffineTransform(rotationAngle: angle)
+        self.contentView.transform = rotationTransform
+        self.currentRotationAngle = angle
+    }
 }
 
 public protocol IRStickerViewDelegate: NSObjectProtocol {
@@ -418,6 +435,9 @@ public protocol IRStickerViewDelegate: NSObjectProtocol {
     func ir_StickerView(stickerView: IRStickerView, imageForRightBottomControl recommendedSize: CGSize) -> UIImage?
 
     func ir_StickerViewDidTapRightBottomControl(stickerView: IRStickerView) // Effective when image is provided.
+    
+    func ir_StickerViewCurrentRotationAngle(rotationValue: CGFloat)
+
 }
 
 public extension IRStickerViewDelegate {
@@ -439,6 +459,4 @@ public extension IRStickerViewDelegate {
 
     func ir_StickerViewDidTapRightBottomControl(stickerView: IRStickerView) {}
 }
-
-
 

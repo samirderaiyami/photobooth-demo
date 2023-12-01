@@ -45,6 +45,12 @@ class LayoutListVC: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self, name: Notification.Name("UpdateHome"), object: nil)
     }
+    
+    
+    @IBAction func btnFinalImages(sender: UIButton) {
+        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SavedPhotosVC") as! SavedPhotosVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 
 }
 
