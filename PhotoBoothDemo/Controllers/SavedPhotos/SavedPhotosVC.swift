@@ -6,21 +6,19 @@
 //
 
 import UIKit
-import DevicePpi
 
 
 class SavedPhotosVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
     var arrImages: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         collectionView.register(UINib(nibName: "LayoutCollCell", bundle: nil), forCellWithReuseIdentifier: "LayoutCollCell")
-        if let image = loadImage(nameOfImage: "samir_1.jpg") {
-            arrImages.append(image)
-        }
+        loadImage()
         collectionView.reloadData()
     }
     
@@ -28,29 +26,37 @@ class SavedPhotosVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
 
-    func loadImage(nameOfImage : String) -> UIImage? {
-        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
-        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
-        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
-        
-        
-        if let dirPath = paths.first{
-            let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(nameOfImage)
+    func loadImage()  {
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
             
-            if FileManager.default.fileExists(atPath: imageURL.path) {
-                let image    = UIImage(contentsOfFile: imageURL.path)
-                return image!
-            } else {
-                print("File not exists")
-                return nil
+            let filteredURLS = fileURLs.filter({$0.lastPathComponent.hasSuffix("_final.jpg")})
+            
+            for item in filteredURLS {
+                if let image = loadImageFromURL(url: item) {
+                    arrImages.append(image)
+                }
             }
+            // process files
+            print(fileURLs)
+        } catch {
+            print(error)
         }
-        
-        return nil
+
     }
 
     
-
+    func loadImageFromURL(url: URL) -> UIImage? {
+        do {
+            let imageData = try Data(contentsOf: url)
+            return UIImage(data: imageData)
+        } catch {
+            print("Error loading image: \(error)")
+            return nil
+        }
+    }
 
 }
 
@@ -72,14 +78,9 @@ extension SavedPhotosVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DesignPhotoBoothVC") as! DesignPhotoBoothVC
-//        vc.delegate = self
-//        if collectionView == collSavedLayouts {
-//            vc.layout = Layout.getUserEditedVideos()[indexPath.row]
-//        } else {
-//            vc.layout = arrLayouts[indexPath.row]
-//        }
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoDisplayVC") as! PhotoDisplayVC
+        vc.selectedImage = arrImages[indexPath.row]
+        self.present(vc, animated: true)
     }
 
 

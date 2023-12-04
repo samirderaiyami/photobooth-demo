@@ -2,8 +2,8 @@
 //  JLStickerLabelView.swift
 //  stickerTextView
 //
-//  Created by 刘业臻 on 16/4/19.
-//  Copyright © 2016年 luiyezheng. All rights reserved.
+//  Created by AppcanoLLC on 16/4/20.
+//  Copyright © AppcanoLLC. All rights reserved.
 //
 
 import UIKit
@@ -88,24 +88,17 @@ public class JLStickerLabelView: UIView {
             rotateView?.isUserInteractionEnabled = enableRotate
         }
     }
-    public var enableMoveRestriction: Bool = true {
+    public var enableMoveRestriction: Bool = false {
         didSet {
             
         }
     }
     public var showsContentShadow: Bool = false {
         didSet {
-            if showsContentShadow {
-                self.layer.shadowColor = UIColor.black.cgColor
-                self.layer.shadowOffset = CGSize(width: 0, height: 5)
-                self.layer.shadowOpacity = 1.0
-                self.layer.shadowRadius = 4.0
-            }else {
                 self.layer.shadowColor = UIColor.clear.cgColor
                 self.layer.shadowOffset = CGSize.zero
                 self.layer.shadowOpacity = 0.0
                 self.layer.shadowRadius = 0.0
-            }
         }
     }
     
@@ -161,7 +154,7 @@ public class JLStickerLabelView: UIView {
     }
     
     func setup() {
-        self.globalInset = 19
+        self.globalInset = 17
         
         self.backgroundColor = UIColor.clear
         self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -334,6 +327,7 @@ extension JLStickerLabelView: UIGestureRecognizerDelegate, adjustFontSizeToFillR
             
             let angleDiff = deltaAngle! - ang
             self.transform = CGAffineTransform(rotationAngle: -angleDiff)
+            delegate?.labelViewDidChangeRotation?(self, currentRotation: -angleDiff)
             self.rotationAngle = -angleDiff
             self.layoutIfNeeded()
             
@@ -342,7 +336,6 @@ extension JLStickerLabelView: UIGestureRecognizerDelegate, adjustFontSizeToFillR
             self.scale = scale
             let scaleRect = CalculateFunctions.CGRectScale(initialBounds!, wScale: CGFloat(scale), hScale: CGFloat(scale))
             self.scaleRect = scaleRect
-            print(scaleRect)
             if scaleRect.size.width >= (1 + globalInset! * 2) && scaleRect.size.height >= (1 + globalInset! * 2) && self.labelTextView.text != "" {
                 //  if fontSize < 100 || CGRectGetWidth(scaleRect) < CGRectGetWidth(self.bounds) {
                 if scale < 1 && labelTextView.fontSize <= 9 {
@@ -391,7 +384,7 @@ extension JLStickerLabelView {
         labelTextView.isSelectable = true
         labelTextView.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         labelTextView?.text = "ENTER TEXT"
-        
+        labelTextView.alignment = .center
     }
     
     func setupBorder() {
@@ -404,10 +397,13 @@ extension JLStickerLabelView {
     }
     
     func setupCloseAndRotateView() {
-        closeView = UIImageView(frame: CGRect(x: 0, y: 0, width: globalInset! * 2 - 6, height: globalInset! * 2 - 6))
+        
+        let marginMinusForSize: CGFloat = 10
+        
+        closeView = UIImageView(frame: CGRect(x: 0, y: 0, width: globalInset! * 2 - marginMinusForSize, height: globalInset! * 2 - marginMinusForSize))
         closeView?.autoresizingMask = [.flexibleRightMargin, .flexibleBottomMargin]
         closeView!.layer.borderColor = UIColor(red: 33, green: 45, blue: 59, alpha: 1).cgColor
-        closeView!.layer.borderWidth = 3
+        closeView!.layer.borderWidth = 0
         closeView?.contentMode = .scaleAspectFill
         closeView?.clipsToBounds = true
         closeView?.backgroundColor = UIColor.clear
@@ -416,14 +412,13 @@ extension JLStickerLabelView {
         closeView?.isUserInteractionEnabled = true
         self.addSubview(closeView!)
         
-        rotateView = UIImageView(frame: CGRect(x: self.bounds.size.width - globalInset! * 2, y: self.bounds.size.height - globalInset! * 2, width: globalInset! * 2 - 6, height: globalInset! * 2 - 6))
+        rotateView = UIImageView(frame: CGRect(x: self.bounds.size.width - globalInset! - 5, y: self.bounds.size.height - globalInset! * 2, width: globalInset! * 2 - marginMinusForSize, height: globalInset! * 2 - marginMinusForSize))
         rotateView?.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
         rotateView?.backgroundColor = UIColor.clear
         rotateView?.layer.cornerRadius =  globalInset! - 10
         rotateView?.layer.borderColor = UIColor.white.cgColor
-        rotateView?.layer.borderWidth = 3
+        rotateView?.layer.borderWidth = 0
         rotateView?.clipsToBounds = true
-        //self.rotateImage = UIImage(named: "rotate-option")
         rotateView?.contentMode = .scaleAspectFit
         rotateView?.isUserInteractionEnabled = true
         self.addSubview(rotateView!)
@@ -579,5 +574,8 @@ extension JLStickerLabelView {
     
     
     @objc optional func labelViewDidSelected(_ label: JLStickerLabelView) -> Void
+    
+    @objc optional func labelViewDidChangeRotation(_ label: JLStickerLabelView, currentRotation: CGFloat) -> Void
+
     
 }

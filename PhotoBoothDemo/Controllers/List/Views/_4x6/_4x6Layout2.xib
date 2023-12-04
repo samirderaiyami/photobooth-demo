@@ -36,7 +36,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
-                <outlet property="view1" destination="EGY-Gw-soG" id="Syz-ym-LOU"/>
+                <outlet property="view1" destination="EGY-Gw-soG" id="qax-EN-1rl"/>
             </connections>
             <point key="canvasLocation" x="-461.83206106870227" y="-644.0140845070423"/>
         </view>

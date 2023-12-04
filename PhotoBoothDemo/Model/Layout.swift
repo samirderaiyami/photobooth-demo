@@ -62,10 +62,10 @@ class Layout: Codable {
 
     var layoutBackgroundColor: String? = "ffffff"
     var layoutBackgroundFrame: CGRect?
-    var layoutBackgroundRotate: CGFloat?
+    var layoutBackgroundRotate: CGFloat = 0.0
     var layoutBackgroundScale: CGRect?
 
-    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], previewImage: Data? = nil, texts: [Text]? = [], irStickers: [Data]? = [], layoutBackgroundColor: String? = "ffffff", layoutBackgroundFrame: CGRect? = nil, layoutBackgroundRotate: CGFloat? = 0.0, layoutBackgroundScale: CGRect? = nil) {
+    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], previewImage: Data? = nil, texts: [Text]? = [], irStickers: [Data]? = [], layoutBackgroundColor: String? = "ffffff", layoutBackgroundFrame: CGRect? = nil, layoutBackgroundRotate: CGFloat = 0.0, layoutBackgroundScale: CGRect? = nil) {
         self.id = id
         self.viewName = viewName
         self.indexSelected = indexSelected

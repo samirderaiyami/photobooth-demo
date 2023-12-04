@@ -24,19 +24,11 @@ class DesignPhotoBoothVC: UIViewController {
     //MARK: - Variables
     var layout: Layout?
     
-    var selectedSticker: IRStickerView?
     var arrStickers: [StickerView] = []
     var arrStickersRotation: [CGFloat] = []
     var arrStickersFrame: [CGRect] = []
     var arrStickersScale: [CGRect] = []
-    var backgroundImageFrame: CGRect?
-    var backgroundImageRotate: CGFloat?
-    var backgroundImageScaleBound: CGRect?
-
-    var currentSticker: StickerView?
-
-    var animator: UIDynamicAnimator?
-    
+        
     var delegate: DesignPhotoBoothVCDelegate?
     var arrPhotoboothImageViews: [UIView] = []
     
@@ -65,16 +57,24 @@ class DesignPhotoBoothVC: UIViewController {
 
     
     //.. Image Picker
-    var currentTransform: CGAffineTransform? = nil
-    var pinchStartImageCenter: CGPoint = CGPoint(x: 0, y: 0)
-    let maxScale: CGFloat = 6.0
-    let minScale: CGFloat = 0.09
-    var currentScale: CGFloat = 1.0
     var colorPickerFrom: OpenColorPickerFrom = .layout
     
-    var currentRotationAngle: CGFloat = 0.0
-    var backImage: UIImage?
+    //.. Background
+    var currentBackgroundImage: UIImage?
+    var defaultBackgroundImageFrame: CGRect {
+        return CGRect(x: 10, y: 5, width: 295 - 20, height: 443 - 10)
+    }
+    var backgroundImageFrame: CGRect?
+    var backgroundImageRotate: CGFloat = 0.0
+    var backgroundImageScaleBound: CGRect?
+    
+    //.. TEXT
+    @IBOutlet weak var heightOfMainToolbar: NSLayoutConstraint!
+    @IBOutlet weak var stackMainToolBar: UIStackView!
+    @IBOutlet weak var heightOfFontToolbar: NSLayoutConstraint!
 
+    var arrTextsRotation: [CGFloat] = []
+    
     //MARK: - ViewLifeCycle Methods
 
     override func viewDidLoad() {
@@ -83,64 +83,72 @@ class DesignPhotoBoothVC: UIViewController {
         
         setupLayoutViews()
         setupLayoutData()
+        showHideFontToolbar(isShow: false)
         
-        let tapRecognizer = UITapGestureRecognizer.init(target: self, action:#selector(tapBackground(recognizer:)))
-        tapRecognizer.numberOfTapsRequired = 1
-        self.view.addGestureRecognizer(tapRecognizer)
+        self.setupTapOutSideGesture()
         
-        let tapRecognizer1 = UITapGestureRecognizer.init(target: self, action:#selector(tapBackground1(recognizer:)))
-        tapRecognizer1.numberOfTapsRequired = 1
-        self.viewCenter.addGestureRecognizer(tapRecognizer1)
-
-
-        //.. Hide the label borders before save
+        //.. HIDE HANDLERS
         self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
     }
-    
     
 }
 
 //MARK: - Action Methods
 extension DesignPhotoBoothVC {
     @IBAction func onAddLabel(_ sender: UIButton) {
-        viewCenter.addDefaultLabel(defaultFrame: CGRect(x: viewCenter.bounds.midX - CGFloat(arc4random()).truncatingRemainder(dividingBy: 20),
-                                                        y: viewCenter.bounds.midY - CGFloat(arc4random()).truncatingRemainder(dividingBy: 20),
+        
+        self.hideAllHandlers()
+
+        viewCenter.addDefaultLabel(defaultFrame: CGRect(x: viewCenter.frame.width / 2.0 - 30,
+                                                        y: viewCenter.frame.height / 2.0 - 25,
                                                         width: 60, height: 50))
-        viewCenter.currentlyEditingLabel.closeView!.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_delete.png")
-        viewCenter.currentlyEditingLabel.rotateView?.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_resize.png")
-        viewCenter.currentlyEditingLabel.closeView?.layer.cornerRadius = 16
-        viewCenter.currentlyEditingLabel.rotateView?.layer.cornerRadius = 16
+        viewCenter.currentlyEditingLabel.closeView!.image = deleteImage
+        viewCenter.currentlyEditingLabel.rotateView?.image = resizeImage
+        viewCenter.currentlyEditingLabel.closeView?.layer.cornerRadius = 9
+        viewCenter.currentlyEditingLabel.rotateView?.layer.cornerRadius = 9
+        
+        arrTextsRotation.append(0.0)
+        self.showHideFontToolbar(isShow: true)
+        
+        //.. Hide sticker Handles
+        self.selectedStickerView?.showEditingHandlers = false
+
     }
     
     @IBAction func onSteakerAdd(_ sender: UIButton) {
         //Add the label
-        let labelFrame = CGRect(x: viewCenter.bounds.midX - CGFloat(arc4random()).truncatingRemainder(dividingBy: 20),
-                                y: viewCenter.bounds.midY - CGFloat(arc4random()).truncatingRemainder(dividingBy: 20),
-                                width: 50, height: 50)
+        self.hideAllHandlers()
 
-        addSticker(frame: labelFrame, name: "smile_1")
+        addDefaultSticker()
     }
     
     @IBAction func btnCamera(sender: UIButton) {
-        //.. Hide the label borders before save
-        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
-        
-        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomCameraViewController") as! CustomCameraViewController
-        vc.layout = self.layout
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.saveEverything()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomCameraVC") as! CustomCameraVC
+            vc.layout = self.layout
+            self.navigationController?.pushViewController(vc, animated: true)
+        })
     }
     
     @IBAction func btnBack(sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        saveEverything()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.navigationController?.popViewController(animated: true)
+        })
     }
     
     @IBAction func btnDeleteTemplate(_ sender: UIButton) {
+        deleteBackgroundImageIfExists() 
         Layout.deleteUserEditedVideos(id: self.layout?.id ?? 0)
         delegate?.updateListUI()
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnLayoutColor(sender: UIButton) {
+        
+        self.hideAllHandlers()
+
         let picker = UIColorPickerViewController()
         // Setting the Initial Color of the Picker
         picker.selectedColor = .red
@@ -157,45 +165,45 @@ extension DesignPhotoBoothVC {
     }
     
     @IBAction func btnSaveLayout(_ sender: UIButton) {
-        
-        //.. Hide the label borders before save
-        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
-        
-        for item in arrStickers {
-            item.showEditingHandlers = false
-        }
-        
-        if let view = viewCenter.viewWithTag(1000) as? StickerView {
-            view.showEditingHandlers = false
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.saveEverything()
-        })
-        
+        saveEverything()
     }
     
     func saveEverything() {
-        var tempSteakers: [Sticker] = []
+                
+        self.hideAllHandlers()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            //.. SAVE TEXT
+            self.saveTexts()
+                  
+            self.saveImage(image: self.viewCenter.asImage())
+             
+            //.. SAVE BACKGROUND COLOR
+            self.layout?.layoutBackgroundColor = (self.viewCenter.backgroundColor ?? .white).hexStringFromColor()
+            
+            //.. SAVE STICKER
+            self.saveSticker()
+            
+            //.. SAVE BACKGROUND IMAGE
+            self.saveBackgroundImage()
+            
+            //.. UPDATE MAIN MODEL
+            if let layout = self.layout {
+                Layout.updateUserEditedVideos(VideoModel: layout)
+            }
+            
+            self.delegate?.updateListUI()
+        })
+
+    }
+    
+    func saveTexts() {
+        
         var tempTexts: [Text] = []
-        
-        print("SAVE")
-        for (index,_) in self.arrStickers.enumerated() {
-            
-            print("Index: \(index)")
-            print("Frame: \(arrStickersFrame[index])")
-            
-            var frame = arrStickersFrame[index]
-            frame.size = arrStickersScale[index].size
-                        
-            tempSteakers.append(Sticker(imgName: "smile_1", location: frame,rotationAngle: arrStickersRotation[index], scale: arrStickersScale[index]))
-        }
-        
-        layout?.steakers = tempSteakers
-        
-        //.. TEXT
-        for item in viewCenter.labels {
+
+        for (index,item) in viewCenter.labels.enumerated() {
             let labelItem = item as! JLStickerLabelView
+            
             let w = labelItem.frame.width
             let h = labelItem.frame.height
             let x = labelItem.frame.origin.x
@@ -203,64 +211,63 @@ extension DesignPhotoBoothVC {
             let location = CGRect(x: x, y: y, width: w, height: h)
             
             let text = labelItem.labelTextView.text!
-    
             let hex = hexStringFromUIColor2(color: labelItem.labelTextView.textColor ?? .black)
+            let size = labelItem.labelTextView.fontSize
+            let fontName = labelItem.labelTextView.fontName
+
+            tempTexts.append(Text(text: text
+                                  ,location: location
+                                  ,rotationAngle: arrTextsRotation[index]
+                                  ,scale: .zero
+                                  ,scaleRect: .zero
+                                  ,font: fontName
+                                  ,size: size
+                                  ,color: hex ))
             
-            tempTexts.append(Text(text: text, location: location, rotationAngle: labelItem.rotationAngle,scale: labelItem.scale,scaleRect: labelItem.scaleRect
-                                  ,font: labelItem.labelTextView.fontName,size: labelItem.labelTextView.fontSize,color: hex
-                                 ))
+            
+//            tempTexts.append(Text(text: text, location: location, rotationAngle: labelItem.rotationAngle,scale: labelItem.scale,scaleRect: labelItem.scaleRect
+//                                  ,font: labelItem.labelTextView.fontName,size: labelItem.labelTextView.fontSize,color: hex
+//                                 ))
         }
         
         layout?.texts = tempTexts
-                  
-        layout?.layoutBackgroundColor = (viewCenter.backgroundColor ?? .white).hexStringFromColor()
-        
-        //.. Layoutbackground Frame and rotate
-        if backgroundImageFrame == nil {
-            layout?.layoutBackgroundFrame = CGRect(x: 10, y: 10, width: 295 - 20, height: 443 - 20)
-        } else {
-            layout?.layoutBackgroundFrame = backgroundImageFrame
-        }
-        
-        if backgroundImageScaleBound == nil {
-            layout?.layoutBackgroundScale = CGRect(x: 10, y: 10, width: 295 - 20, height: 443 - 20)
-        } else {
-            layout?.layoutBackgroundScale = backgroundImageScaleBound
-        }
-        
-        layout?.layoutBackgroundRotate = backgroundImageRotate
-        
-        saveImage(image: viewCenter.asImage())
     }
     
-    func hexStringFromUIColor2(color: UIColor) -> String {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
+    func saveSticker() {
+        var tempSteakers: [Sticker] = []
         
-        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        
-        let rgb: Int = (Int)(red * 255) << 16 | (Int)(green * 255) << 8 | (Int)(blue * 255)
-        
-        return String(format: "#%06x", rgb)
+        for (index,_) in self.arrStickers.enumerated() {
+            tempSteakers.append(Sticker(imgName: "smile_1", location: arrStickersFrame[index],rotationAngle: arrStickersRotation[index], scale: arrStickersScale[index]))
+        }
+        layout?.steakers = tempSteakers
+    }
+    
+    func saveBackgroundImage() {
+        if let currentBackgroundImage {
+            
+            //.. FRAME
+            if backgroundImageFrame == nil {
+                layout?.layoutBackgroundFrame = self.defaultBackgroundImageFrame
+            } else {
+                layout?.layoutBackgroundFrame = backgroundImageFrame
+            }
+            
+            //.. ROTATION
+            layout?.layoutBackgroundRotate = backgroundImageRotate
+            
+            //.. SCALE
+            if backgroundImageScaleBound != nil {
+                layout?.layoutBackgroundScale = backgroundImageScaleBound
+            }
+            
+            saveBackgroundImage(image: currentBackgroundImage)
+        } else {
+            self.deleteBackgroundImageIfExists()
+        }
     }
 
-    
-    func hexStringFromColor1(color: UIColor) -> String {
-        let components = color.cgColor.components
-        let r: CGFloat = components?[0] ?? 0.0
-        let g: CGFloat = components?[1] ?? 0.0
-        let b: CGFloat = components?[2] ?? 0.0
-        
-        return String(format: "#%02lX%02lX%02lX",
-                      lroundf(Float(r * 255)),
-                      lroundf(Float(g * 255)),
-                      lroundf(Float(b * 255)))
-    }
-
-    
     @IBAction func btnBackgroundImage(_ sender: UIButton) {
+        self.hideAllHandlers()
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .photoLibrary
@@ -278,13 +285,15 @@ extension DesignPhotoBoothVC {
         let fontNamesArray = ["Baskerville-BoldItalic", "AcademyEngravedLetPlain", "AlNile-Bold", "Chalkduster"]
         let fontName = fontNamesArray[Int(index)]
         viewCenter.fontName = fontName
+        viewCenter.adjustsWidthToFillItsContens(viewCenter.currentlyEditingLabel, labelView: viewCenter.currentlyEditingLabel.labelTextView)
     }
     
     @IBAction func selectTextFontSize(_ sender: UIButton) {
-        let index = arc4random_uniform(3)
-        let fontSizes = [15, 60, 20]
-        let textAlpha = fontSizes[Int(index)]
-        viewCenter.fontSize = CGFloat(textAlpha)
+        let number = CGFloat(Int.random(in: 20 ..< 50))
+        print("Number: \(number)")
+        viewCenter.fontSize = number
+        viewCenter.currentlyEditingLabel.labelTextView.fontSize = number
+        viewCenter.adjustsWidthToFillItsContens(viewCenter.currentlyEditingLabel, labelView: viewCenter.currentlyEditingLabel.labelTextView)
         viewCenter.layoutIfNeeded()
     }
     
@@ -309,6 +318,13 @@ extension DesignPhotoBoothVC {
 extension DesignPhotoBoothVC {
     
     func setupLayoutViews() {
+        
+//        // Create the custom view
+//        if layout?.indexSelected == 0 {
+//            addConstraintAndSubViews(myCustomView: _4x6Layout1.fromNib())
+//        } else if layout?.indexSelected == 1 {
+//            addConstraintAndSubViews(myCustomView: _4x6Layout2.fromNib())
+//        }
         // Create the custom view
         if layout?.indexSelected == 0 {
             let myCustomView: _4x6Layout1 = _4x6Layout1.fromNib()
@@ -355,162 +371,142 @@ extension DesignPhotoBoothVC {
         
         if let layout = layout {
             
-            //.. Background Color
-            viewCenter.backgroundColor = UIColor.hexStringToUIColor(hex: layout.layoutBackgroundColor ?? "ffffff")
-            
-            print("GET")
-            
-            //.. Stickers
-            if layout.steakers.count > 0 {
-                for (index,item) in layout.steakers.enumerated() {
-                    
-                    print("Index: \(index)")
-                    print("Frame: \(item.location)")
-
-                    addSticker(frame: item.location, name: item.imgName, rotationAngle: item.rotationAngle, scale: item.scale)
-                }
-            }
-            
-            //.. Texts
+            //.. TEXT LABELS
             if layout.texts.count > 0 {
                 for item in layout.texts {
                     addLabel(textModel: item)
                 }
             }
             
-            adBackgroundImage()
+            //.. BACKGROUND COLOR
+            viewCenter.backgroundColor = UIColor.hexStringToUIColor(hex: layout.layoutBackgroundColor ?? "ffffff")
+
+            //.. STICKERS
+            if layout.steakers.count > 0 {
+                
+                for (index,item) in layout.steakers.enumerated() {
+                    showSticker(index: index, sticker: item)
+                }
+            }
+            
+            //.. BACKGROUND IMAGE
+            self.showBackgroundImage()
         }
     }
     
+    func setupTapOutSideGesture() {
+        let tapRecognizer = UITapGestureRecognizer.init(target: self, action:#selector(tapBackground(recognizer:)))
+        tapRecognizer.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(tapRecognizer)
+
+        let tapRecognizer1 = UITapGestureRecognizer.init(target: self, action:#selector(tapBackground1(recognizer:)))
+        tapRecognizer1.numberOfTapsRequired = 1
+        self.viewCenter.addGestureRecognizer(tapRecognizer1)
+        
+        if let view = viewCenter.viewWithTag(1000) {
+            let tapRecognizer2 = UITapGestureRecognizer.init(target: self, action:#selector(tapBackground2(recognizer:)))
+            tapRecognizer2.numberOfTapsRequired = 1
+            view.addGestureRecognizer(tapRecognizer2)
+        }
+    }
+    
+    func showHideFontToolbar(isShow: Bool) {
+        if isShow {
+            heightOfMainToolbar.constant = 0
+            stackMainToolBar.isHidden = true
+            heightOfFontToolbar.constant = 30
+            viewFont.isHidden = false
+        } else {
+            heightOfMainToolbar.constant = 30
+            stackMainToolBar.isHidden = false
+            heightOfFontToolbar.constant = 0
+            viewFont.isHidden = true
+        }
+    }
+    
+    func hideAllHandlers() {
+        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
+        self.selectedStickerView?.showEditingHandlers = false
+        if let view = viewCenter.viewWithTag(1000) as? StickerView {
+            view.showEditingHandlers = false
+        }
+    }
     
         
     @objc func tapBackground(recognizer: UITapGestureRecognizer) {
-        
-        //.. Hide the label borders before save
-        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
-
-        if (selectedSticker != nil) {
-            selectedSticker!.enabledControl = false
-            selectedSticker!.enabledBorder = false;
-            selectedSticker = nil
-        }
-        
-        for item in arrStickers {
-            item.showEditingHandlers = false
-        }
-        
-        if let view = viewCenter.viewWithTag(1000) as? StickerView {
-            view.showEditingHandlers = false
-        }
+        hideAllHandlers()
     }
     
     @objc func tapBackground1(recognizer: UITapGestureRecognizer) {
-        
-        //.. Hide the label borders before save
-        self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
-        
-        if (selectedSticker != nil) {
-            selectedSticker!.enabledControl = false
-            selectedSticker!.enabledBorder = false;
-            selectedSticker = nil
-        }
-        
-        for item in arrStickers {
-            item.showEditingHandlers = false
-        }
-        
-        if let view = viewCenter.viewWithTag(1000) as? StickerView {
-            view.showEditingHandlers = false
-        }
+        hideAllHandlers()
     }
     
-    func addSticker(frame: CGRect, name: String, rotationAngle: CGFloat = 0.0, scale: CGRect? = nil) {
-                
-        let testImage = UIImageView.init(frame: frame)
-        testImage.image = UIImage(named: "smile_1")
-        testImage.contentMode = .scaleAspectFit
-        let stickerView3 = StickerView.init(contentView: testImage)
-        stickerView3.frame = frame
-        stickerView3.delegate = self
-        stickerView3.setImage(deleteImage!, forHandler: StickerViewHandler.close)
-        stickerView3.setImage(resizeImage!, forHandler: StickerViewHandler.rotate)
-        stickerView3.showEditingHandlers = false
-        stickerView3.outlineBorderColor = .clear
-        stickerView3.tag = 999
+    @objc func tapBackground2(recognizer: UITapGestureRecognizer) {
+        hideAllHandlers()
+    }
+    
+    func addDefaultSticker() {
         
-        self.viewCenter.addSubview(stickerView3)
-        self.selectedStickerView = stickerView3
+        let labelFrame = CGRect(x: viewCenter.frame.width / 2.0 - 40,
+                                y: viewCenter.frame.height / 2.0 - 40,
+                                width: 80, height: 80)
+
+        let stickerView = createBackgroundSticker(image: UIImage(named: "smile_1")!, layout: self.layout!, defaultFrame: labelFrame, isNormalSticker: true)
+        self.viewCenter.addSubview(stickerView)
+        self.selectedStickerView = stickerView
         
-        stickerView3.transform = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
-        
-        self.arrStickers.append(stickerView3)
-        self.arrStickersRotation.append(rotationAngle)
-        self.arrStickersFrame.append(frame)
-        self.arrStickersScale.append(frame)
+        self.arrStickers.append(stickerView)
+        self.arrStickersFrame.append(labelFrame)
+        self.arrStickersRotation.append(0.0)
+        self.arrStickersScale.append(.zero)
 
     }
+    
+    func showSticker(index: Int, sticker: Sticker) {
+        
+        let stickerView = self.createNormalSticker(image: UIImage(named: "smile_1")!, stickerFrame: sticker.location)
+        
+        self.viewCenter.addSubview(stickerView)
+
+        self.arrStickers.append(stickerView)
+        self.arrStickersFrame.append(sticker.location)
+        self.arrStickersRotation.append(sticker.rotationAngle)
+        self.arrStickersScale.append(sticker.scale)
+
+        //.. ROTATION
+        stickerView.transform = CGAffineTransform(rotationAngle: CGFloat(sticker.rotationAngle))
+        
+        //.. SCALE
+        if sticker.scale != .zero {
+            stickerView.bounds = sticker.scale
+            stickerView.setNeedsDisplay()
+        }
+        
+    }
+
 
     func addLabel(textModel: Text?) {
-                
-        viewCenter.fontName = textModel?.font ?? "HelveticaNeue"
-        viewCenter.fontSize = textModel?.size ?? 20.0
-        viewCenter.textColor = colorWithHexString1(hexString: textModel?.color ?? "")
+            
+        if let textModel {
+            
+            viewCenter.addLabel(textModel: textModel)
+            
+            self.viewCenter.textColor = colorWithHexString(hexString: textModel.color)
 
-        let size = CGSize(width: 207.03278410434723, height: 72.9441933631897)
-        var scaleFrame = textModel?.location
-        scaleFrame?.size = size
-        
-        viewCenter.addLabel(withText: textModel?.text ?? "", withFrame: textModel?.location ?? .zero, fontName: textModel?.font ?? "HelveticaNeue", fontSize: textModel?.size ?? 20.0, textColor: colorWithHexString1(hexString: textModel?.color ?? ""))
-        
-        viewCenter.currentlyEditingLabel.closeView!.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_delete.png")
-        viewCenter.currentlyEditingLabel.rotateView?.image = UIImage.imageNamedForCurrentBundle(name: "IRSticker.bundle/btn_resize.png")
-        viewCenter.currentlyEditingLabel.closeView?.layer.cornerRadius = 16
-        viewCenter.currentlyEditingLabel.rotateView?.layer.cornerRadius = 16
-//        
-        viewCenter.currentlyEditingLabel.transform = CGAffineTransform(rotationAngle: textModel?.rotationAngle ?? 0.0)
-//        
-//        if textModel?.scaleRect != nil {
-//            DispatchQueue.main.async {
-////                self.viewCenter.currentlyEditingLabel.bounds = textModel!.scaleRect
-////                self.viewCenter.currentlyEditingLabel.adjustsWidthToFillItsContens(self.viewCenter.currentlyEditingLabel, labelView: self.viewCenter.currentlyEditingLabel.labelTextView)
-////                self.viewCenter.currentlyEditingLabel.refresh()
-//            }
-//        }
-//
-
-    }
+            viewCenter.currentlyEditingLabel.closeView!.image = deleteImage
+            viewCenter.currentlyEditingLabel.rotateView?.image = resizeImage
+            viewCenter.currentlyEditingLabel.closeView?.layer.cornerRadius = 9
+            viewCenter.currentlyEditingLabel.rotateView?.layer.cornerRadius = 9
     
-    func colorWithHexString1(hexString: String) -> UIColor {
-        var cString: String = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        
-        if cString.hasPrefix("#") {
-            cString.remove(at: cString.startIndex)
+            arrTextsRotation.append(textModel.rotationAngle)
         }
         
-        if (cString.count != 6) && (cString.count != 8) {
-            return UIColor.gray // Default color in case of wrong format
-        }
-        
-        var rgbValue: UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-        
-        let r = CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
-        let g = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
-        let b = CGFloat(rgbValue & 0x0000FF) / 255.0
-        let a = (cString.count == 8) ? CGFloat((rgbValue & 0xFF000000) >> 24) / 255.0 : 1.0
-        
-        return UIColor(red: r, green: g, blue: b, alpha: a)
+
     }
     
     func saveImage(image: UIImage) {
-        
-        guard let data = image.jpegData(compressionQuality: 0.5) else { return }
+        guard let data = image.jpegData(compressionQuality: 1) else { return }
         layout?.previewImage = data
-        
-        if let layout {
-            Layout.updateUserEditedVideos(VideoModel: layout)
-        }
-        delegate?.updateListUI()
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -525,72 +521,77 @@ extension DesignPhotoBoothVC {
         }
     }
     
-    func createAndLayoutImageViews(viewMain: UIView, using layout: ViewsLayout) {
-        var previousView: UIImageView?
-        
-        for viewLayout in layout.views {
-            let imageView = UIImageView()
-            imageView.contentMode = .scaleToFill
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.image = UIImage(named: viewLayout.imageName)
-            viewMain.addSubview(imageView)
-            
-            // Leading and Trailing Constraints
-            imageView.leadingAnchor.constraint(equalTo: viewMain.leadingAnchor, constant: viewLayout.leading.constant).isActive = true
-            imageView.trailingAnchor.constraint(equalTo: viewMain.trailingAnchor, constant: viewLayout.trailing.constant).isActive = true
-            
-            // Top Constraint
-            if let previousView = previousView {
-                imageView.topAnchor.constraint(equalTo: previousView.bottomAnchor, constant: viewLayout.top.constant).isActive = true
-            } else {
-                imageView.topAnchor.constraint(equalTo: viewMain.topAnchor, constant: viewLayout.top.constant).isActive = true
-            }
-            
-            // Bottom or Height Constraint
-            if let bottomConstraint = viewLayout.bottom {
-                imageView.bottomAnchor.constraint(equalTo: viewMain.bottomAnchor, constant: -bottomConstraint.constant).isActive = true
-            } else {
-                imageView.heightAnchor.constraint(equalToConstant: viewLayout.height!).isActive = true
-            }
-            
-            previousView = imageView
-        }
-    }
-    
-    func adBackgroundImage() {
+    func showBackgroundImage() {
         
         //.. Background Image
-        if let image = loadImage(nameOfImage: "\(self.layout?.id ?? 0)") {
-            let testImage = UIImageView.init(frame: self.viewCenter.bounds)
-            testImage.image = image
-            testImage.contentMode = .scaleAspectFill
-            let stickerView3 = StickerView.init(contentView: testImage)
-            stickerView3.frame = layout?.layoutBackgroundFrame ?? .zero
-            stickerView3.delegate = self
-            stickerView3.setImage(deleteImage!, forHandler: StickerViewHandler.close)
-            stickerView3.setImage(resizeImage!, forHandler: StickerViewHandler.rotate)
-            stickerView3.showEditingHandlers = false
-            stickerView3.outlineBorderColor = .clear
-            stickerView3.clipsToBounds = true
-            stickerView3.tag = 1000
-            self.selectedStickerView = stickerView3
+        if let image = loadImage(nameOfImage: "\(self.layout?.id ?? 0)"), let layout = self.layout {
             
-            stickerView3.transform = CGAffineTransform(rotationAngle: CGFloat(layout?.layoutBackgroundRotate ?? 0.0))
+            //.. Restore variables
+            self.currentBackgroundImage = image
+            self.backgroundImageRotate = layout.layoutBackgroundRotate
             
-            if layout?.layoutBackgroundScale != nil {
-                stickerView3.bounds = layout!.layoutBackgroundScale!
-                stickerView3.setNeedsDisplay()
+            if let scaleBounds = layout.layoutBackgroundScale {
+                self.backgroundImageScaleBound = scaleBounds
             }
+            
+            if let frame = layout.layoutBackgroundFrame {
+                self.backgroundImageFrame = frame
+            }
+            
+            let stickerView = createBackgroundSticker(image: image, layout: layout, isNormalSticker: false)
             
             if let view1 = self.viewCenter.viewWithTag(120) {
                 if let viewToRemove = view1.viewWithTag(1000) {
                     viewToRemove.removeFromSuperview()
                 }
-                self.saveImageToDocumentDirectory(name: "layout_\(layout?.id ?? 0)_background_image", image: image)
-                view1.insertSubview(stickerView3, at: 0)
+                view1.insertSubview(stickerView, at: 0)
             }
+            
+            //.. ROTATE
+            stickerView.transform = CGAffineTransform(rotationAngle: CGFloat(layout.layoutBackgroundRotate))
+            
+            //.. SCALE
+            if let scale = layout.layoutBackgroundScale {
+                stickerView.bounds = scale
+                stickerView.setNeedsDisplay()
+            }
+            
         }
         
+    }
+    
+    func createBackgroundSticker(image: UIImage, layout: Layout, defaultFrame: CGRect? = nil, isNormalSticker: Bool) -> StickerView {
+        let testImage = UIImageView()
+        testImage.image = image
+        testImage.contentMode = .scaleAspectFill
+        
+        let stickerView = StickerView.init(contentView: testImage)
+        stickerView.frame = (defaultFrame == nil) ? layout.layoutBackgroundFrame ?? .zero : defaultFrame!
+        stickerView.delegate = self
+        stickerView.setImage(deleteImage!, forHandler: StickerViewHandler.close)
+        stickerView.setImage(resizeImage!, forHandler: StickerViewHandler.rotate)
+        stickerView.showEditingHandlers = false
+        stickerView.outlineBorderColor = .clear
+        stickerView.clipsToBounds = true
+        stickerView.tag = isNormalSticker ? 999 : 1000
+        return stickerView
+    }
+    
+    func createNormalSticker(image: UIImage, stickerFrame: CGRect) -> StickerView {
+        let testImage = UIImageView()
+        testImage.image = image
+        testImage.contentMode = .scaleAspectFill
+        
+        let stickerView = StickerView.init(contentView: testImage)
+        stickerView.frame = stickerFrame
+        stickerView.delegate = self
+        stickerView.setImage(deleteImage!, forHandler: StickerViewHandler.close)
+        stickerView.setImage(resizeImage!, forHandler: StickerViewHandler.rotate)
+        stickerView.showEditingHandlers = false
+        stickerView.outlineBorderColor = .clear
+        stickerView.clipsToBounds = true
+        stickerView.tag = 999
+        return stickerView
     }
 
 }
@@ -605,6 +606,7 @@ extension DesignPhotoBoothVC: UIColorPickerViewControllerDelegate {
         if colorPickerFrom == .layout {
             self.viewCenter.backgroundColor = viewController.selectedColor
         } else{
+            self.viewCenter.textColor = viewController.selectedColor
             self.viewCenter.currentlyEditingLabel.labelTextView.textColor =  viewController.selectedColor
         }
         
@@ -619,6 +621,7 @@ extension DesignPhotoBoothVC: UIColorPickerViewControllerDelegate {
         if colorPickerFrom == .layout {
             viewCenter.backgroundColor = colorWithHexString(hexString: hexColor)
         } else{
+            self.viewCenter.textColor = colorWithHexString(hexString: hexColor)
             self.viewCenter.currentlyEditingLabel.labelTextView.textColor =  colorWithHexString(hexString: hexColor)
         }
         
@@ -634,244 +637,181 @@ extension DesignPhotoBoothVC: UIColorPickerViewControllerDelegate {
         print(hexString)
         return hexString
     }
-    func colorWithHexString(hexString: String) -> UIColor {
-        var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
-        colorString = colorString.replacingOccurrences(of: "#", with: "").uppercased()
-        
-        print(colorString)
-        let alpha: CGFloat = 1.0
-        let red: CGFloat = self.colorComponentFrom(colorString: colorString, start: 0, length: 2)
-        let green: CGFloat = self.colorComponentFrom(colorString: colorString, start: 2, length: 2)
-        let blue: CGFloat = self.colorComponentFrom(colorString: colorString, start: 4, length: 2)
-        
-        let color = UIColor(red: red, green: green, blue: blue, alpha: alpha)
-        return color
-    }
-    func colorComponentFrom(colorString: String, start: Int, length: Int) -> CGFloat {
-        
-        let startIndex = colorString.index(colorString.startIndex, offsetBy: start)
-        let endIndex = colorString.index(startIndex, offsetBy: length)
-        let subString = colorString[startIndex..<endIndex]
-        let fullHexString = length == 2 ? subString : "\(subString)\(subString)"
-        var hexComponent: UInt32 = 0
-        
-        guard Scanner(string: String(fullHexString)).scanHexInt32(&hexComponent) else {
-            return 0
-        }
-        let hexFloat: CGFloat = CGFloat(hexComponent)
-        let floatValue: CGFloat = CGFloat(hexFloat / 255.0)
-        print(floatValue)
-        return floatValue
-    }
-    
-    
 }
 
-
-
 extension DesignPhotoBoothVC : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
-
-            let testImage = UIImageView.init(frame: self.viewCenter.bounds)
-            testImage.image = image
-            testImage.contentMode = .scaleAspectFill
-            let stickerView3 = StickerView.init(contentView: testImage)
-            stickerView3.frame = CGRect(x: 10, y: 10, width: 295 - 20, height: 443 - 20)
-            stickerView3.delegate = self
-            stickerView3.setImage(deleteImage!, forHandler: StickerViewHandler.close)
-            stickerView3.setImage(resizeImage!, forHandler: StickerViewHandler.rotate)
-                stickerView3.showEditingHandlers = false
-            stickerView3.outlineBorderColor = .clear
-            stickerView3.clipsToBounds = true
-            stickerView3.tag = 1000
-            self.selectedStickerView = stickerView3
+            currentBackgroundImage = image
+            
+            
+            let stickerView = createBackgroundSticker(image: image, layout: layout!, defaultFrame: defaultBackgroundImageFrame, isNormalSticker: false)
+            
+            self.selectedStickerView = stickerView
             
             if let view1 = self.viewCenter.viewWithTag(120) {
                 if let viewToRemove = view1.viewWithTag(1000) {
                     viewToRemove.removeFromSuperview()
                 }
-                self.deleteBackgroundImageIfExists()
-                self.saveImageToDocumentDirectory(name: "layout_\(layout?.id ?? 0)_background_image", image: image)
-                view1.insertSubview(stickerView3, at: 0)
+                view1.insertSubview(stickerView, at: 0)
             }
             picker.dismiss(animated: true)
         }
         
     }
-}
-
-
-extension DesignPhotoBoothVC: UIGestureRecognizerDelegate {
     
-    @objc func rotatedImage(rotateGesture: UIRotationGestureRecognizer) {
-        guard let subImageView = rotateGesture.view else {
-            return
-        }
-        
-        if (rotateGesture.state == .changed) {
-            subImageView.transform = subImageView.transform.rotated(by: rotateGesture.rotation)
-            rotateGesture.rotation = 0
-        }
-    }
-    
-    @objc func pinchActionZoomImage(imagePinchGesture: UIPinchGestureRecognizer) {
-        
-        guard let subImageView = imagePinchGesture.view else {
-            return
-        }
-        
-        if imagePinchGesture.state == .began { // Begin pinch
-            // Store current transfrom of UIImageView
-            self.currentTransform = subImageView.transform
-            
-            // Store initial loaction of pinch action
-            self.pinchStartImageCenter = subImageView.center
-        }
-        else if imagePinchGesture.state == .changed {
-            let pinchCenter = CGPoint(x: imagePinchGesture.location(in: subImageView).x - subImageView.bounds.midX,
-                                      y: imagePinchGesture.location(in: subImageView).y - subImageView.bounds.midY)
-            let transform = subImageView.transform.translatedBy(x: pinchCenter.x, y: pinchCenter.y)
-                .scaledBy(x: imagePinchGesture.scale, y: imagePinchGesture.scale)
-                .translatedBy(x: -pinchCenter.x, y: -pinchCenter.y)
-            subImageView.transform = transform
-            imagePinchGesture.scale = 1
-        }
-        
-        if (imagePinchGesture.state == .ended) {
-            let currentScale = sqrt(abs(subImageView.transform.a * subImageView.transform.d - subImageView.transform.b * subImageView.transform.c))
-            if currentScale <= self.minScale { // Under lower scale limit
-                UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {() -> Void in
-                    subImageView.center = CGPoint(x: subImageView.frame.size.width / 2, y: subImageView.frame.size.height / 2)
-                    subImageView.frame = CGRect(x: subImageView.frame.origin.x, y: subImageView.frame.origin.y, width: subImageView.frame.size.width, height: subImageView.frame.size.height)
-                }, completion: nil)
-            } else if self.maxScale <= currentScale { // Upper higher scale limit
-                UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {() -> Void in}, completion: nil)
-            }
-            else {
-                UIView.animate(withDuration: 0.2, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {() -> Void in}, completion: nil)
-            }
-            
-        }
-        
-    }
-    
-    //Move object to view
-    @objc func imageGestureHandler(gesture: UIPanGestureRecognizer) {
-        if let gestureView = gesture.view {
-            // Store current transfrom of UIImageView
-            let transform = gestureView.transform
-            
-            // Initialize imageView.transform
-            gestureView.transform = CGAffineTransform.identity
-            
-            // Move UIImageView
-            let point: CGPoint = gesture.translation(in: viewCenter)
-            let movedPoint = CGPoint(x: gestureView.center.x + point.x,
-                                     y: gestureView.center.y + point.y)
-            gestureView.center = movedPoint
-            
-            // Revert imageView.transform
-            gestureView.transform = transform
-            
-            // Reset translation
-            gesture.setTranslation(CGPoint.zero, in: gestureView)
-        }
-        
+    private func saveBackgroundImage(image: UIImage) {
+        self.deleteBackgroundImageIfExists()
+        self.saveImageToDocumentDirectory(name: "layout_\(layout?.id ?? 0)_background_image", image: image)
     }
 }
 
 extension DesignPhotoBoothVC: JLStickerImageViewDelegate {
+    
+    func labelViewChangeEditing(label: JLStickerLabelView, rotationAngle: CGFloat) {
+        print("-==-=-==-=-=-=-=-==-=-=-=-")
+//        print(rotationAngle)
+        for (index,item) in viewCenter.labels.enumerated() {
+            let itemLabel = item as! JLStickerLabelView
+            
+            if itemLabel == label {
+                arrTextsRotation[index] = rotationAngle
+            }
+        }
+        print(arrTextsRotation)
+        print("-==-=-==-=-=-=-=-==-=-=-=-")
+    }
+    
+    func labelViewDidEndEditing(label: JLStickerLabelView, rotationAngle: CGFloat) {
+    }
+    
     func rotationValue() {
         printContent("ROOOO")
     }
     
     func showFontToolbar() {
-        self.viewFont.isHidden = false
+        self.selectedStickerView?.showEditingHandlers = false
+        showHideFontToolbar(isShow: true)
     }
     
     func hideFontToolbar() {
-        self.viewFont.isHidden = true
+        showHideFontToolbar(isShow: false)
     }
     
     func removeLabel(label: JLStickerLabelView) {
-        for item in self.viewCenter.labels {
+        for (index,item) in self.viewCenter.labels.enumerated() {
             if (item as! JLStickerLabelView) == label {
+                self.arrTextsRotation.remove(at: index)
                 self.viewCenter.labels.remove(item)
             }
         }
+        self.showHideFontToolbar(isShow: false)
     }
 }
 
 extension DesignPhotoBoothVC: StickerViewDelegate {
     func stickerViewDidBeginMoving(_ stickerView: StickerView) {
         self.selectedStickerView = stickerView
+        print("stickerViewDidBeginMoving")
     }
     
     func stickerViewDidChangeMoving(_ stickerView: StickerView) {
         self.selectedStickerView = stickerView
+        print("stickerViewDidChangeMoving")
     }
     
     func stickerViewDidEndMoving(_ stickerView: StickerView) {
+        print("stickerViewDidEndMoving")
+        print("Frame: \(stickerView.frame)")
         
         if stickerView.tag == 1000 {
             self.backgroundImageFrame = stickerView.frame
         } else {
             if let index = arrStickers.firstIndex(where: {$0 == stickerView}) {
-                arrStickersFrame[index] = stickerView.frame
+                self.arrStickersFrame[index] = stickerView.frame
             }
+            
+            self.arrangeViews(stickerView: stickerView)
         }
     }
     
     func stickerViewDidBeginRotating(_ stickerView: StickerView) {
-        
+        print("stickerViewDidBeginRotating")
+
     }
     
-    func stickerViewDidChangeRotating(_ stickerView: StickerView) {
-        
+    func stickerViewDidChangeRotating(_ stickerView: StickerView) {}
+    
+    func stickerViewDidEndRotating(_ stickerView: StickerView) {
+        print("=--=-=-=-===-=-=-==-===-=--=-=")
+        print("stickerViewDidEndRotating")
+        print("Current Rotation: \(stickerView.currentRotation)")
         if stickerView.tag == 1000 {
-            self.backgroundImageFrame = stickerView.frame
             self.backgroundImageRotate = stickerView.currentRotation
             self.backgroundImageScaleBound = stickerView.currentScale
         } else {
             if let index = arrStickers.firstIndex(where: {$0 == stickerView}) {
-                arrStickersFrame[index] = stickerView.frame
                 arrStickersRotation[index] = stickerView.currentRotation
-                
-                print("CurrentScale: \(stickerView.currentScale)")
-                if let scale = stickerView.currentScale {
-                    arrStickersScale[index] = scale
-                }
-                
+                arrStickersScale[index] = stickerView.currentScale ?? .zero
             }
         }
-    }
-    
-    func stickerViewDidEndRotating(_ stickerView: StickerView) {
-        
+        print("=--=-=-=-===-=-=-==-===-=--=-=")
     }
     
     func stickerViewDidClose(_ stickerView: StickerView) {
-        if let index = arrStickers.firstIndex(where: {$0 == stickerView}) {
-            arrStickers.remove(at: index)
-            arrStickersFrame.remove(at: index)
-            arrStickersRotation.remove(at: index)
-            arrStickersScale.remove(at: index)
+        print("stickerViewDidClose")
+        currentBackgroundImage = nil
+        
+        //.. Remove Sticker from Array
+        if let index = self.arrStickers.firstIndex(where: {$0 == stickerView}) {
+            self.arrStickers.remove(at: index)
+            self.arrStickersFrame.remove(at: index)
+            self.arrStickersRotation.remove(at: index)
+            self.arrStickersScale.remove(at: index)
         }
         
-        deleteBackgroundImageIfExists()
     }
     
     func stickerViewDidTap(_ stickerView: StickerView) {
-        arrStickers.forEach({ item in
-            item.showEditingHandlers = false
-        })
-        stickerView.showEditingHandlers = true
+        print("stickerViewDidTap")
+        
+        //.. Remove focus from text
         self.viewCenter.currentlyEditingLabel?.hideEditingHandlers()
+
+        if stickerView.tag == 1000 {
+            //.. Background Sticker.
+            selectedStickerView?.showEditingHandlers = false
+            stickerView.showEditingHandlers = true
+        } else {
+            selectedStickerView = stickerView
+            stickerView.showEditingHandlers = true
+            if let view = viewCenter.viewWithTag(1000) as? StickerView {
+                view.showEditingHandlers = false
+            }
+            self.arrangeViews(stickerView: stickerView)
+            
+        }
     }
     
+    func arrangeViews(stickerView: StickerView) {
+        if let index = self.arrStickers.firstIndex(where: {$0 == stickerView}) {
+            self.arrStickers = rearrange(array: arrStickers, fromIndex: index, toIndex: arrStickers.count - 1)
+            self.arrStickersFrame = rearrange(array: arrStickersFrame, fromIndex: index, toIndex: arrStickersFrame.count - 1)
+            self.arrStickersScale = rearrange(array: arrStickersScale, fromIndex: index, toIndex: arrStickersScale.count - 1)
+            self.arrStickersRotation = rearrange(array: arrStickersRotation, fromIndex: index, toIndex: arrStickersRotation.count - 1)
+        }
+    }
+    
+    func rearrange<T>(array: Array<T>, fromIndex: Int, toIndex: Int) -> Array<T>{
+        var arr = array
+        let element = arr.remove(at: fromIndex)
+        arr.insert(element, at: toIndex)
+        return arr
+    }
 }
+
 
 extension DesignPhotoBoothVC {
     
@@ -910,7 +850,7 @@ extension DesignPhotoBoothVC {
         }
     }
     
-    private func deleteBackgroundImageIfExists(){
+    private func deleteBackgroundImageIfExists() {
         
         let fileManager = FileManager.default
         let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as NSURL
@@ -923,8 +863,7 @@ extension DesignPhotoBoothVC {
                 print("all files in cache: \(fileNames)")
                 for fileName in fileNames {
                     
-                    if (fileName.hasSuffix("background_image.jpg"))
-                    {
+                    if fileName.lowercased() == "layout_\(layout?.id ?? 0)_background_image.jpg" {
                         let filePathName = "\(documentPath)/\(fileName)"
                         try fileManager.removeItem(atPath: filePathName)
                     }

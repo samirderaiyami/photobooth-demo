@@ -55,9 +55,9 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
-                <outlet property="view1" destination="0SR-kv-gAp" id="xHD-3e-K18"/>
-                <outlet property="view2" destination="oen-WY-z09" id="xTT-gb-mLv"/>
-                <outlet property="view3" destination="fRW-xu-KOs" id="h6F-hr-SVc"/>
+                <outlet property="view1" destination="0SR-kv-gAp" id="Qf4-tV-TFN"/>
+                <outlet property="view2" destination="oen-WY-z09" id="b8x-hm-g1x"/>
+                <outlet property="view3" destination="fRW-xu-KOs" id="Qsn-DZ-UIY"/>
             </connections>
             <point key="canvasLocation" x="-461.83206106870227" y="-644.0140845070423"/>
         </view>

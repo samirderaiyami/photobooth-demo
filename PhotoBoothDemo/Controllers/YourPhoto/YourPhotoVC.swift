@@ -18,6 +18,7 @@ class YourPhotoVC: UIViewController {
     override func viewDidLoad() {
         if let finalImage = finalImage {
             centerImage.image = finalImage
+            deleteBackgroundImageIfExists(fileNameToDelete: "layout_\(layout?.id ?? 0)_final.jpg")
             saveImageToDocumentDirectory(image: finalImage)
         }
         
@@ -60,7 +61,7 @@ class YourPhotoVC: UIViewController {
 
 extension YourPhotoVC {
     
-    private func deleteBackgroundImageIfExists(){
+    private func deleteBackgroundImageIfExists(fileNameToDelete: String){
         
         let fileManager = FileManager.default
         let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! as NSURL
@@ -73,7 +74,7 @@ extension YourPhotoVC {
                 print("all files in cache: \(fileNames)")
                 for fileName in fileNames {
                     
-                    if (fileName.lowercased() == "samir_1.jpg")
+                    if (fileName.lowercased() == fileNameToDelete.lowercased())
                     {
                         let filePathName = "\(documentPath)/\(fileName)"
                         try fileManager.removeItem(atPath: filePathName)
@@ -92,11 +93,10 @@ extension YourPhotoVC {
     
     func saveImageToDocumentDirectory(image: UIImage ) {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileName = "samir_1.jpg" // name of the image to be saved
+        let fileName = "layout_\(layout?.id ?? 0)_final.jpg" // name of the image to be saved
         let fileURL = documentsDirectory.appendingPathComponent(fileName)
         if let data = image.jpegData(compressionQuality: 1.0),!FileManager.default.fileExists(atPath: fileURL.path){
             do {
-                self.deleteBackgroundImageIfExists()
                 try data.write(to: fileURL)
                 print("file saved")
             } catch {

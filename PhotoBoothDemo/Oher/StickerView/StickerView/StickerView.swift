@@ -126,7 +126,7 @@ public class StickerView: UIView {
     public var currentScale: CGRect?
 
     public  init(contentView: UIView) {
-        self.defaultInset = 11
+        self.defaultInset = 12
         self.defaultMinimumSize = 4 * self.defaultInset
         
         var frame = contentView.frame
@@ -296,7 +296,7 @@ public class StickerView: UIView {
         return UIPanGestureRecognizer(target: self, action: #selector(handleRotateGesture(_:)))
     }()
     private lazy var closeImageView:UIImageView = {
-        let closeImageview = UIImageView(frame: CGRect(x: 0, y: 0, width: self.defaultInset * 2, height: self.defaultInset * 2))
+        let closeImageview = UIImageView(frame: CGRect(x: 100, y: 100, width: self.defaultInset * 2, height: self.defaultInset * 2))
         closeImageview.contentMode = UIView.ContentMode.scaleAspectFit
         closeImageview.backgroundColor = UIColor.clear
         closeImageview.isUserInteractionEnabled = true
@@ -360,11 +360,15 @@ public class StickerView: UIView {
                 delegate.stickerViewDidBeginRotating(self)
             }
         case .changed:
+            
+            //.. ROTATE CODE
             let angle = atan2f(Float(touchLocation.y - center.y), Float(touchLocation.x - center.x))
             let angleDiff = Float(self.deltaAngle) - angle
             self.transform = CGAffineTransform(rotationAngle: CGFloat(-angleDiff))
             currentRotation = CGFloat(-angleDiff)
             
+            
+            //.. SCALE CODE
             var scale = CGPointGetDistance(point1: center, point2: touchLocation) / self.initialDistance
             let minimumScale = CGFloat(self.minimumSize) / min(self.initialBounds.size.width, self.initialBounds.size.height)
             scale = max(scale, minimumScale)

@@ -235,20 +235,24 @@ extension  UITableViewHeaderFooterView {
     }
 }
 
-//extension UIView {
-//
-//    // Using a function since `var image` might conflict with an existing variable
-//    // (like on `UIImageView`)
-//    func asImage() -> UIImage {
-//        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-//        return renderer.image { rendererContext in
-//            layer.render(in: rendererContext.cgContext)
-//        }
-//    }
-//}
 extension UIView{
 
     func makeCommonShadow() {
         self.shadow(color: .black, shadowOffset: CGSize(width: 0, height: 0), shadowRadius: 3, shadowOpacity: 0.25)
     }
+    
+    /// Creates an image from the view's contents, using its layer.
+    ///
+    /// - Returns: An image, or nil if an image couldn't be created.
+    func image() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        context.saveGState()
+        layer.render(in: context)
+        context.restoreGState()
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
 }

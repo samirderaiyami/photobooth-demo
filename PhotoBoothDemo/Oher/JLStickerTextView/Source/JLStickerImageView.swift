@@ -2,8 +2,8 @@
 //  stickerView.swift
 //  stickerTextView
 //
-//  Created by 刘业臻 on 16/4/20.
-//  Copyright © 2016年 luiyezheng. All rights reserved.
+//  Created by AppcanoLLC on 16/4/20.
+//  Copyright © AppcanoLLC. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,8 @@ import UIKit
 protocol JLStickerImageViewDelegate {
     func showFontToolbar()
     func hideFontToolbar()
-    func rotationValue()
+    func labelViewDidEndEditing(label: JLStickerLabelView, rotationAngle: CGFloat)
+    func labelViewChangeEditing(label: JLStickerLabelView, rotationAngle: CGFloat)
     func removeLabel(label: JLStickerLabelView)
 }
 
@@ -27,7 +28,6 @@ public class JLStickerImageView: UIImageView, UIGestureRecognizerDelegate {
         return tapGesture
         
     }()
-    public var rotationAngle: CGFloat!
 
     //MARK: -
     //MARK: init
@@ -58,49 +58,50 @@ public class JLStickerImageView: UIImageView, UIGestureRecognizerDelegate {
 extension JLStickerImageView {
     public func addDefaultLabel(defaultFrame: CGRect) {
         
-        if let label: JLStickerLabelView = currentlyEditingLabel {
-            label.hideEditingHandlers()
-        }
-        
         let labelView = JLStickerLabelView(frame: defaultFrame)
         labelView.delegate = self
-        labelView.showsContentShadow = false
-        labelView.enableMoveRestriction = false
+
         labelView.labelTextView.backgroundColor = .clear
         labelView.labelTextView.text = "ENTER TEXT"
-        labelView.labelTextView.fontName = "Baskerville-BoldItalic"
+        labelView.labelTextView.fontName = "HelveticaNeue"
+        labelView.labelTextView.fontSize = 20
+        labelView.labelTextView.textColor = .black
+
         self.addSubview(labelView)
         
         self.currentlyEditingLabel = labelView
+        
         self.adjustsWidthToFillItsContens(self.currentlyEditingLabel, labelView: self.currentlyEditingLabel.labelTextView)
 
         self.labels.add(labelView)
+        
         self.addGestureRecognizer(tapOutsideGestureRecognizer)
         
     }
     
-    public func addLabel(withText: String, withFrame: CGRect, fontName: String, fontSize: CGFloat, textColor: UIColor) {
+    func addLabel(textModel: Text) {
         if let label: JLStickerLabelView = currentlyEditingLabel {
             label.hideEditingHandlers()
         }
-        let labelView = JLStickerLabelView(frame: withFrame)
+        let labelView = JLStickerLabelView(frame: textModel.location)
         labelView.delegate = self
-        labelView.showsContentShadow = false
-        labelView.enableMoveRestriction = false
+        
         labelView.labelTextView.backgroundColor = .clear
-        labelView.labelTextView.text = withText
-        labelView.labelTextView.fontName = fontName
-        labelView.labelTextView.fontSize = fontSize
-        labelView.labelTextView.textColor = textColor
+        labelView.labelTextView.text = textModel.text
+        labelView.labelTextView.fontName = textModel.font
+        labelView.labelTextView.fontSize = textModel.size
+        labelView.labelTextView.textColor = colorWithHexString(hexString: textModel.color)
 
         self.addSubview(labelView)
-        
         self.currentlyEditingLabel = labelView
+
         self.adjustsWidthToFillItsContens(self.currentlyEditingLabel, labelView: self.currentlyEditingLabel.labelTextView)
         
         self.labels.add(labelView)
         self.addGestureRecognizer(tapOutsideGestureRecognizer)
         
+        labelView.transform = CGAffineTransform(rotationAngle: textModel.rotationAngle)
+
     }
     
     public func renderTextOnView(_ view: UIView) -> UIImage? {
@@ -153,47 +154,61 @@ extension JLStickerImageView {
 extension JLStickerImageView: JLStickerLabelViewDelegate {
     public func labelViewDidBeginEditing(_ label: JLStickerLabelView) {
         //labels.removeObject(label)
-        
+        print("labelViewDidBeginEditing")
     }
     
     public func labelViewDidClose(_ label: JLStickerLabelView) {
         delegate?.removeLabel(label: label)
+        print("labelViewDidClose")
     }
     
     public func labelViewDidShowEditingHandles(_ label: JLStickerLabelView) {
         currentlyEditingLabel = label
-        self.delegate?.showFontToolbar()
+        print("labelViewDidShowEditingHandles")
+
     }
     
     public func labelViewDidHideEditingHandles(_ label: JLStickerLabelView) {
         currentlyEditingLabel = nil
         self.delegate?.hideFontToolbar()
         
+        print("labelViewDidHideEditingHandles")
+
     }
     
     public func labelViewDidStartEditing(_ label: JLStickerLabelView) {
         currentlyEditingLabel = label
+        print("labelViewDidStartEditing")
+
     }
     
     public func labelViewDidChangeEditing(_ label: JLStickerLabelView) {
-        print(label.rotationAngle)
-        rotationAngle = label.rotationAngle
+        print("labelViewDidChangeEditing")
+//        print(label.rotationAngle)
+        //delegate?.labelViewChangeEditing(label: label, rotationAngle: label.rotationAngle)
+
     }
     
     public func labelViewDidEndEditing(_ label: JLStickerLabelView) {
-        
-        
+//        print("labelViewDidEndEditing")
+//        print(label.rotationAngle)
+//        delegate?.labelViewDidEndEditing(label: label, rotationAngle: label.rotationAngle)
     }
     
     public func labelViewDidSelected(_ label: JLStickerLabelView) {
+        print("labelViewDidEndEditing")
+
         for labelItem in labels {
             if let label: JLStickerLabelView = labelItem as? JLStickerLabelView {
                 label.hideEditingHandlers()
             }
         }
-        
         label.showEditingHandles()
-        
+        self.delegate?.showFontToolbar()
+    }
+    
+    public func labelViewDidChangeRotation(_ label: JLStickerLabelView, currentRotation: CGFloat) {
+        delegate?.labelViewChangeEditing(label: label, rotationAngle: currentRotation)
     }
     
 }

@@ -2,8 +2,8 @@
 //  JLAttributedTextView.swift
 //  JLAttributesTextView
 //
-//  Created by 刘业臻 on 16/4/24.
-//  Copyright © 2016年 luiyezheng. All rights reserved.
+//  Created by AppcanoLLC on 16/4/20.
+//  Copyright © AppcanoLLC. All rights reserved.
 //
 
 import UIKit
