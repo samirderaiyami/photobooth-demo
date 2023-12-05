@@ -90,11 +90,25 @@ extension LayoutListVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DesignPhotoBoothVC") as! DesignPhotoBoothVC
         vc.delegate = self
+        let dateFormatterGet : DateFormatter = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyyMMddHHmmss"
+        let formatedBGName = "layout_\(dateFormatterGet.string(from: Date()))_background_image.jpg"
+        
         if collectionView == collSavedLayouts {
-            vc.layout = Layout.getUserEditedVideos()[indexPath.row]
+            let layoutObject = Layout.getUserEditedVideos()[indexPath.row]
+            //Change value to false when user try to open from saved list item
+            layoutObject.isNewLayout = false
+            if (layoutObject.backgroundImageName.count == 0) {
+                
+                layoutObject.backgroundImageName = formatedBGName
+            }
+            vc.layout = layoutObject
         } else {
-            vc.layout = arrLayouts[indexPath.row]
+            //Add blank object with selected layout style to render view with blank page.
+            let layoutObject = arrLayouts[indexPath.row]
+            vc.layout = Layout(id: layoutObject.id, viewName: layoutObject.viewName, indexSelected: layoutObject.indexSelected, noOfViews: layoutObject.noOfViews ?? 0, isNewLayout: true, backgroundImageName: formatedBGName)
         }
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

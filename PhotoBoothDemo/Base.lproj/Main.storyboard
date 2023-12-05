@@ -24,7 +24,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ojU-xi-0MC">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ojU-xi-0MC">
                                 <rect key="frame" x="0.0" y="110" width="393" height="110"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -42,7 +42,7 @@
                                     <outlet property="delegate" destination="Mao-WL-xoJ" id="b25-jE-pTQ"/>
                                 </connections>
                             </collectionView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="N64-ax-qdC">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="N64-ax-qdC">
                                 <rect key="frame" x="0.0" y="301" width="393" height="110"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -124,7 +124,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RlR-p0-5sQ">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RlR-p0-5sQ">
                                 <rect key="frame" x="0.0" y="140" width="393" height="110"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -871,7 +871,12 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="buttonAirDrop" destination="fJ7-LW-VpF" id="hCk-XT-ZkO"/>
+                        <outlet property="buttonMail" destination="Z1y-1X-bLB" id="gtq-nO-Tx5"/>
+                        <outlet property="buttonPrint" destination="zD1-tg-Zcg" id="xuJ-4i-LVI"/>
+                        <outlet property="buttonText" destination="VWe-MT-0ZZ" id="9de-Mg-1OX"/>
                         <outlet property="centerImage" destination="1Kz-oV-e2v" id="4IP-9c-o7V"/>
+                        <outlet property="stackViewButtonContainer" destination="LZC-Ik-ko9" id="3Er-PK-Vwu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B0J-T8-biJ" sceneMemberID="firstResponder"/>

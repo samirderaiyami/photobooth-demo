@@ -11,14 +11,26 @@ class YourPhotoVC: UIViewController {
     
     @IBOutlet weak var centerImage: UIImageView!
     @IBOutlet weak var viewCenter: UIView!
-
+    @IBOutlet weak var buttonAirDrop: UIButton!
+    @IBOutlet weak var buttonPrint: UIButton!
+    @IBOutlet weak var buttonText: UIButton!
+    @IBOutlet weak var buttonMail: UIButton!
+    @IBOutlet weak var stackViewButtonContainer: UIStackView!
+    
     var finalImage: UIImage?
     var layout: Layout?
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.buttonAirDrop.tintAdjustmentMode = .normal
+        self.buttonPrint.tintAdjustmentMode = .normal
+        self.buttonText.tintAdjustmentMode = .normal
+        self.buttonMail.tintAdjustmentMode = .normal
+        
         if let finalImage = finalImage {
             centerImage.image = finalImage
-            deleteBackgroundImageIfExists(fileNameToDelete: "layout_\(layout?.id ?? 0)_final.jpg")
+//            deleteBackgroundImageIfExists(fileNameToDelete: "layout_\(layout?.id ?? 0)_final.jpg")
             saveImageToDocumentDirectory(image: finalImage)
         }
         
@@ -43,7 +55,10 @@ class YourPhotoVC: UIViewController {
         // set up activity view controller
         let imageToShare = [ image! ]
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        if let iPadPopOver = activityViewController.popoverPresentationController {
+            iPadPopOver.sourceView = stackViewButtonContainer // so that iPads won't crash
+            iPadPopOver.sourceRect = stackViewButtonContainer.bounds
+        }
         
         // exclude some activity types from the list (optional)
         activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
@@ -93,7 +108,10 @@ extension YourPhotoVC {
     
     func saveImageToDocumentDirectory(image: UIImage ) {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileName = "layout_\(layout?.id ?? 0)_final.jpg" // name of the image to be saved
+        
+        let dateFormatterGet : DateFormatter = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyyMMddHHmmss"
+        let fileName = "layout_\(dateFormatterGet.string(from: Date()))_final.jpg" // name of the image to be saved
         let fileURL = documentsDirectory.appendingPathComponent(fileName)
         if let data = image.jpegData(compressionQuality: 1.0),!FileManager.default.fileExists(atPath: fileURL.path){
             do {

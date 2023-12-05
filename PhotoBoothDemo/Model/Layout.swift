@@ -56,6 +56,9 @@ class Layout: Codable {
     var noOfViews: Int? = 1
     var previewImage: Data?
     var steakers: [Sticker] = []
+    var isNewLayout: Bool = false
+    var createdAt: Date = Date()
+    var backgroundImageName: String = ""
     
     //.. Text
     var texts: [Text] = []
@@ -65,7 +68,7 @@ class Layout: Codable {
     var layoutBackgroundRotate: CGFloat = 0.0
     var layoutBackgroundScale: CGRect?
 
-    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], previewImage: Data? = nil, texts: [Text]? = [], irStickers: [Data]? = [], layoutBackgroundColor: String? = "ffffff", layoutBackgroundFrame: CGRect? = nil, layoutBackgroundRotate: CGFloat = 0.0, layoutBackgroundScale: CGRect? = nil) {
+    init(id: Int, viewName: String, indexSelected: Int, noOfViews: Int, steakers: [Sticker]? = [], previewImage: Data? = nil, texts: [Text]? = [], irStickers: [Data]? = [], layoutBackgroundColor: String? = "ffffff", layoutBackgroundFrame: CGRect? = nil, layoutBackgroundRotate: CGFloat = 0.0, layoutBackgroundScale: CGRect? = nil, isNewLayout: Bool? = false, backgroundImageName: String? = nil) {
         self.id = id
         self.viewName = viewName
         self.indexSelected = indexSelected
@@ -73,7 +76,8 @@ class Layout: Codable {
         self.steakers = steakers ?? []
         self.previewImage = previewImage
         self.texts = texts ?? []
-        
+        self.isNewLayout = isNewLayout ?? false
+        self.backgroundImageName = backgroundImageName ?? ""
         self.layoutBackgroundColor = layoutBackgroundColor
         self.layoutBackgroundFrame = layoutBackgroundFrame
         self.layoutBackgroundRotate = layoutBackgroundRotate
@@ -107,13 +111,15 @@ class Layout: Codable {
     
     public static func updateUserEditedVideos(VideoModel: Layout){
         var userVideos = getUserEditedVideos()
-        if let index = userVideos.firstIndex(where: {$0.id == VideoModel.id}) {
+        VideoModel.createdAt = Date()
+        if let index = userVideos.firstIndex(where: {$0.backgroundImageName == VideoModel.backgroundImageName}), !VideoModel.isNewLayout {
             userVideos[index] = VideoModel
         } else {
             userVideos.insert(VideoModel, at: 0)
         }
         let videosData = try! JSONEncoder().encode(userVideos)
         UserDefaults.standard.set(videosData, forKey: CUserDefaultsKey.userSavedVideos)
+        
     }
     
     public static func deleteUserEditedVideos(id: Int){

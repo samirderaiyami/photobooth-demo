@@ -318,58 +318,30 @@ extension DesignPhotoBoothVC {
 extension DesignPhotoBoothVC {
     
     func setupLayoutViews() {
-        
-//        // Create the custom view
-//        if layout?.indexSelected == 0 {
-//            addConstraintAndSubViews(myCustomView: _4x6Layout1.fromNib())
-//        } else if layout?.indexSelected == 1 {
-//            addConstraintAndSubViews(myCustomView: _4x6Layout2.fromNib())
-//        }
+
         // Create the custom view
         if layout?.indexSelected == 0 {
-            let myCustomView: _4x6Layout1 = _4x6Layout1.fromNib()
-            // Add the subview to the cell
-            
-            myCustomView.translatesAutoresizingMaskIntoConstraints = false
-            // Add the subview to the cell
-            myCustomView.tag = 120
-            self.viewCenter.addSubview(myCustomView)
-            // Constraints for myCustomView to match cell size
-            NSLayoutConstraint.activate([
-                myCustomView.topAnchor.constraint(equalTo: self.viewCenter.topAnchor),
-                myCustomView.bottomAnchor.constraint(equalTo: self.viewCenter.bottomAnchor),
-                myCustomView.leadingAnchor.constraint(equalTo: self.viewCenter.leadingAnchor),
-                myCustomView.trailingAnchor.constraint(equalTo: self.viewCenter.trailingAnchor)
-            ])
-            arrPhotoboothImageViews.append(myCustomView.view1)
-            arrPhotoboothImageViews.append(myCustomView.view2)
-            arrPhotoboothImageViews.append(myCustomView.view3)
-            
+            NibLoader.loadView(_4x6Layout1.self, fromNib: ._4x6Layout1, viewToAdd: self.viewCenter, subViews:  { (arrSubViews: [UIView]) in
+                arrSubViews.forEach { [weak self] (view: UIView) in
+                    self?.arrPhotoboothImageViews.append(view)
+                }
+            })
             
         } else if layout?.indexSelected == 1 {
-            let myCustomView: _4x6Layout2 = _4x6Layout2.fromNib()
-            // Add the subview to the cell
-            myCustomView.tag = 120
-            
-            myCustomView.translatesAutoresizingMaskIntoConstraints = false
-            // Add the subview to the cell
-            
-            self.viewCenter.addSubview(myCustomView)
-            // Constraints for myCustomView to match cell size
-            NSLayoutConstraint.activate([
-                myCustomView.topAnchor.constraint(equalTo: self.viewCenter.topAnchor),
-                myCustomView.bottomAnchor.constraint(equalTo: self.viewCenter.bottomAnchor),
-                myCustomView.leadingAnchor.constraint(equalTo: self.viewCenter.leadingAnchor),
-                myCustomView.trailingAnchor.constraint(equalTo: self.viewCenter.trailingAnchor)
-            ])
-            arrPhotoboothImageViews.append(myCustomView.view1)
-            
+            NibLoader.loadView(_4x6Layout2.self, fromNib: ._4x6Layout2, viewToAdd: self.viewCenter, subViews:  { (arrSubViews: [UIView]) in
+                arrSubViews.forEach { [weak self] (view: UIView) in
+                    self?.arrPhotoboothImageViews.append(view)
+                }
+            })
         }
     }
     
     func setupLayoutData() {
         
-        if let layout = layout {
+        //.. BACKGROUND COLOR
+        viewCenter.backgroundColor = UIColor.hexStringToUIColor(hex: "ffffff")
+        
+        if let layout = layout, !layout.isNewLayout {
             
             //.. TEXT LABELS
             if layout.texts.count > 0 {
@@ -380,10 +352,9 @@ extension DesignPhotoBoothVC {
             
             //.. BACKGROUND COLOR
             viewCenter.backgroundColor = UIColor.hexStringToUIColor(hex: layout.layoutBackgroundColor ?? "ffffff")
-
+            
             //.. STICKERS
             if layout.steakers.count > 0 {
-                
                 for (index,item) in layout.steakers.enumerated() {
                     showSticker(index: index, sticker: item)
                 }
@@ -524,7 +495,8 @@ extension DesignPhotoBoothVC {
     func showBackgroundImage() {
         
         //.. Background Image
-        if let image = loadImage(nameOfImage: "\(self.layout?.id ?? 0)"), let layout = self.layout {
+        if let layout = self.layout,
+            let image = loadImage(nameOfImage: layout.backgroundImageName) {
             
             //.. Restore variables
             self.currentBackgroundImage = image
@@ -664,7 +636,7 @@ extension DesignPhotoBoothVC : UIImagePickerControllerDelegate, UINavigationCont
     
     private func saveBackgroundImage(image: UIImage) {
         self.deleteBackgroundImageIfExists()
-        self.saveImageToDocumentDirectory(name: "layout_\(layout?.id ?? 0)_background_image", image: image)
+        self.saveImageToDocumentDirectory(name: layout?.backgroundImageName ?? "", image: image)
     }
 }
 
@@ -822,7 +794,7 @@ extension DesignPhotoBoothVC {
         
         
         if let dirPath = paths.first{
-            let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent("layout_\(nameOfImage)_background_image.jpg")
+            let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(nameOfImage)
             
             if FileManager.default.fileExists(atPath: imageURL.path) {
                 let image    = UIImage(contentsOfFile: imageURL.path)
@@ -838,8 +810,7 @@ extension DesignPhotoBoothVC {
     
     func saveImageToDocumentDirectory(name: String, image: UIImage ) {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileName = "\(name).jpg" // name of the image to be saved
-        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        let fileURL = documentsDirectory.appendingPathComponent(name)
         if let data = image.jpegData(compressionQuality: 1.0),!FileManager.default.fileExists(atPath: fileURL.path){
             do {
                 try data.write(to: fileURL)
@@ -863,7 +834,7 @@ extension DesignPhotoBoothVC {
                 print("all files in cache: \(fileNames)")
                 for fileName in fileNames {
                     
-                    if fileName.lowercased() == "layout_\(layout?.id ?? 0)_background_image.jpg" {
+                    if fileName.lowercased() == layout?.backgroundImageName {
                         let filePathName = "\(documentPath)/\(fileName)"
                         try fileManager.removeItem(atPath: filePathName)
                     }

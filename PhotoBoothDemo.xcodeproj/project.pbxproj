@@ -26,7 +26,7 @@
 		B8D1BB742B04BD34008A8C48 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D1BB722B04BD34008A8C48 /* Main.storyboard */; };
 		B8D1BB762B04BD36008A8C48 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8D1BB752B04BD36008A8C48 /* Assets.xcassets */; };
 		B8D1BB792B04BD36008A8C48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D1BB772B04BD36008A8C48 /* LaunchScreen.storyboard */; };
-		B8D1BB812B04C023008A8C48 /* CustomCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1BB802B04C023008A8C48 /* CustomCameraViewController.swift */; };
+		B8D1BB812B04C023008A8C48 /* CustomCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8D1BB802B04C023008A8C48 /* CustomCameraVC.swift */; };
 		B8DA433F2B16082600EAB040 /* JLStickerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA43382B16082600EAB040 /* JLStickerImageView.swift */; };
 		B8DA43402B16082600EAB040 /* JLStickerLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA43392B16082600EAB040 /* JLStickerLabelView.swift */; };
 		B8DA43412B16082600EAB040 /* JLAttributedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DA433A2B16082600EAB040 /* JLAttributedTextView.swift */; };
@@ -38,6 +38,7 @@
 		B8EAD9972B10B88C00943018 /* CameraOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EAD9962B10B88C00943018 /* CameraOverlayView.swift */; };
 		B8EB82F42B1DD40000B590DC /* PhotoDisplayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EB82F32B1DD40000B590DC /* PhotoDisplayVC.swift */; };
 		B8EB82F62B1E05CE00B590DC /* UIImageExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EB82F52B1E05CE00B590DC /* UIImageExtention.swift */; };
+		B8FB8BA52B1F39A9004A4547 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB8BA42B1F39A9004A4547 /* Extension+UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,7 +64,7 @@
 		B8D1BB752B04BD36008A8C48 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B8D1BB782B04BD36008A8C48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B8D1BB7A2B04BD36008A8C48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B8D1BB802B04C023008A8C48 /* CustomCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraViewController.swift; sourceTree = "<group>"; };
+		B8D1BB802B04C023008A8C48 /* CustomCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraVC.swift; sourceTree = "<group>"; };
 		B8DA43382B16082600EAB040 /* JLStickerImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLStickerImageView.swift; sourceTree = "<group>"; };
 		B8DA43392B16082600EAB040 /* JLStickerLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLStickerLabelView.swift; sourceTree = "<group>"; };
 		B8DA433A2B16082600EAB040 /* JLAttributedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JLAttributedTextView.swift; sourceTree = "<group>"; };
@@ -75,6 +76,7 @@
 		B8EAD9962B10B88C00943018 /* CameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
 		B8EB82F32B1DD40000B590DC /* PhotoDisplayVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayVC.swift; sourceTree = "<group>"; };
 		B8EB82F52B1E05CE00B590DC /* UIImageExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtention.swift; sourceTree = "<group>"; };
+		B8FB8BA42B1F39A9004A4547 /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		E9EFF3FE85ED5438D711A02A /* Pods-PhotoBoothDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoothDemo.release.xcconfig"; path = "Target Support Files/Pods-PhotoBoothDemo/Pods-PhotoBoothDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -174,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				B8C18AD22B1088C7000CE3D6 /* Cell */,
-				B8D1BB802B04C023008A8C48 /* CustomCameraViewController.swift */,
+				B8D1BB802B04C023008A8C48 /* CustomCameraVC.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -203,6 +205,7 @@
 			children = (
 				B8CBB58C2B1730C000C6687A /* UIColorExtention.swift */,
 				B8EB82F52B1E05CE00B590DC /* UIImageExtention.swift */,
+				B8FB8BA42B1F39A9004A4547 /* Extension+UIView.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -429,7 +432,7 @@
 				B8B45C982B0F5078001B45D1 /* _4x6Layout2.swift in Sources */,
 				B84E98C22B0C943500A3E809 /* LayoutListVC.swift in Sources */,
 				B80E01082B0B6372006CE093 /* DesignPhotoBoothVC.swift in Sources */,
-				B8D1BB812B04C023008A8C48 /* CustomCameraViewController.swift in Sources */,
+				B8D1BB812B04C023008A8C48 /* CustomCameraVC.swift in Sources */,
 				B8EAD9952B10A76E00943018 /* YourPhotoVC.swift in Sources */,
 				B8D1BB6D2B04BD34008A8C48 /* AppDelegate.swift in Sources */,
 				B84E98D92B0CADE300A3E809 /* ExtensionsUIView.swift in Sources */,
@@ -442,6 +445,7 @@
 				B8CBB58D2B1730C000C6687A /* UIColorExtention.swift in Sources */,
 				B8EB82F42B1DD40000B590DC /* PhotoDisplayVC.swift in Sources */,
 				B8E92D642B18819800DE44F0 /* SavedPhotosVC.swift in Sources */,
+				B8FB8BA52B1F39A9004A4547 /* Extension+UIView.swift in Sources */,
 				B8B45C932B0F4EB8001B45D1 /* _4x6Layout1.swift in Sources */,
 				B8DA43422B16082600EAB040 /* CalcuteFunctions.swift in Sources */,
 				B8D1BB6F2B04BD34008A8C48 /* SceneDelegate.swift in Sources */,
@@ -602,7 +606,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = A3X2NV7HPA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoBoothDemo/Info.plist;
@@ -638,7 +642,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = A3X2NV7HPA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoBoothDemo/Info.plist;

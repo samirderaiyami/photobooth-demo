@@ -65,6 +65,7 @@ extension JLStickerImageView {
         labelView.labelTextView.text = "ENTER TEXT"
         labelView.labelTextView.fontName = "HelveticaNeue"
         labelView.labelTextView.fontSize = 20
+        labelView.labelTextView.tintColor = .black
         labelView.labelTextView.textColor = .black
 
         self.addSubview(labelView)

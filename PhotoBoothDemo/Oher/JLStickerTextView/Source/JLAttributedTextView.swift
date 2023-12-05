@@ -211,11 +211,10 @@ extension JLAttributedTextView {
 extension JLAttributedTextView {
     override public func caretRect(for position: UITextPosition) -> CGRect {
         var originalRect = super.caretRect(for: position)
-        let testFont = UIFont.systemFont(ofSize: 18.0)
+        let testFont = self.font ?? UIFont.systemFont(ofSize: 18.0)
         originalRect.size.height = testFont.pointSize - testFont.descender
         // "descender" is expressed as a negative value,
         // so to add its height you must subtract its value
-        
         return originalRect
     }
     
