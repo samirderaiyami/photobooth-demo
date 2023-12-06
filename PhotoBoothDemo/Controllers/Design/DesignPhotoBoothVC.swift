@@ -140,7 +140,7 @@ extension DesignPhotoBoothVC {
     
     @IBAction func btnDeleteTemplate(_ sender: UIButton) {
         deleteBackgroundImageIfExists() 
-        Layout.deleteUserEditedVideos(id: self.layout?.id ?? 0)
+        Layout.deleteUserEditedVideos(backgroundImageName: self.layout?.backgroundImageName ?? "")
         delegate?.updateListUI()
         self.navigationController?.popViewController(animated: true)
     }

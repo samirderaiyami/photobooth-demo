@@ -122,9 +122,9 @@ class Layout: Codable {
         
     }
     
-    public static func deleteUserEditedVideos(id: Int){
+    public static func deleteUserEditedVideos(backgroundImageName: String){
         var userVideos = getUserEditedVideos()
-        if let index = userVideos.firstIndex(where: {$0.id == id}) {
+        if let index = userVideos.firstIndex(where: {$0.backgroundImageName == backgroundImageName}) {
             userVideos.remove(at: index)
             let videosData = try! JSONEncoder().encode(userVideos)
             UserDefaults.standard.set(videosData, forKey: CUserDefaultsKey.userSavedVideos)
@@ -132,3 +132,29 @@ class Layout: Codable {
     }
 
 }
+/*
+public static func getLolAppGalaryPhotos() -> [String] {
+    
+    let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+    
+    if let dirPath = paths.first {
+        let imageDirectory = URL(fileURLWithPath: dirPath).appendingPathComponent("images").absoluteString.replacingOccurrences(of: "file://", with: "")
+        let imageLists = (try? FileManager.default.contentsOfDirectory(atPath: imageDirectory))
+        
+        var arrImageTemp: [String] = []
+        arrImageTemp.append(contentsOf: imageLists?.map({ val in
+            return imageDirectory+val
+        }) ?? [])
+        
+        return arrImageTemp
+    }
+    return []
+    }
+ 
+ 
+ 
+ //.. ACCESS
+ vc.selectedImage = try! UIImage(data: Data(contentsOf: URL(fileURLWithPath: "")))
+
+*/
+
